@@ -187,18 +187,54 @@ Para el desarrollo del Producto Mínimo Viable (PMV), se establecen los siguient
 
 ### Requerimientos Funcionales
 
-- RF01: Registrar cursos, docentes y aulas  
-- RF02: Definir disponibilidad de docentes  
-- RF03: Generar horarios automáticamente  
-- RF04: Detectar conflictos  
-- RF05: Permitir edición manual de horarios  
+# 1. Visión General del Proyecto
 
-### Requerimientos No Funcionales
+El sistema consiste en el desarrollo de un **Producto Mínimo Viable (PMV)** de una aplicación web para la generación automática de horarios académicos en instituciones de educación superior con currículo flexible.
 
-- RNF01: Interfaz amigable  
-- RNF02: Tiempo de generación eficiente  
-- RNF03: Escalabilidad del sistema  
-- RNF04: Seguridad en el manejo de datos  
+El sistema permitirá gestionar entidades académicas (estudiantes, docentes, cursos y aulas), validar restricciones académicas y generar horarios libres de conflictos mediante un modelo de optimización.
+
+El alcance del sistema incluye la generación de horarios válidos en función de restricciones definidas, así como su visualización para usuarios finales.
+
+---
+
+# 2. Especificación de Requerimientos Funcionales (SMART)
+
+| ID | Nombre del Requerimiento | Descripción Técnica (Trigger/Lógica/Resultado) | Criterio de Aceptación (Dado que... Cuando... Entonces...) |
+| :--- | :--- | :--- | :--- |
+| RF-01 | Registro de entidades académicas | El sistema recibe datos de entrada mediante formularios para estudiantes, docentes, cursos y aulas, valida su estructura y los almacena en la base de datos. | Dado que el usuario ingresa datos válidos, cuando envía el formulario, entonces el sistema registra la entidad y la persiste correctamente. |
+| RF-02 | Validación de matrícula | El sistema recibe la selección de cursos de un estudiante, valida créditos máximos y prerrequisitos antes de confirmar la matrícula. | Dado que un estudiante selecciona cursos, cuando se valida la matrícula, entonces el sistema rechaza la operación si excede créditos o incumple prerrequisitos. |
+| RF-03 | Generación automática de horarios | El sistema procesa las entidades registradas y ejecuta un algoritmo que asigna cursos a bloques horarios, docentes y aulas sin conflictos. | Dado que existen datos registrados, cuando se ejecuta la generación, entonces el sistema produce un horario sin solapamientos de aulas, docentes o cursos. |
+| RF-04 | Validación de conflictos | El sistema analiza el horario generado y verifica que no existan conflictos de asignación en recursos o tiempos. | Dado un horario generado, cuando se ejecuta la validación, entonces el sistema confirma que no existen conflictos o reporta inconsistencias. |
+| RF-05 | Visualización de horarios | El sistema presenta los horarios generados en una interfaz estructurada por estudiante o docente. | Dado que existe un horario generado, cuando el usuario accede a la vista, entonces el sistema muestra correctamente los bloques horarios asignados. |
+
+---
+
+# 3. Árbol de Calidad y Requerimientos No Funcionales (arc42)
+
+| Categoría arc42 | Atributo de Calidad | Requerimiento Cuantificable (Métrica) | Justificación de Negocio |
+| :--- | :--- | :--- | :--- |
+| Rendimiento | Tiempo de generación | El sistema debe generar un horario completo para hasta 100 cursos en ≤ 10 segundos (percentil 95). | Si no se cumple, el sistema no será usable en contextos reales. |
+| Rendimiento | Tiempo de respuesta | Las operaciones CRUD deben responder en ≤ 1 segundo (percentil 95). | Impacta directamente en la experiencia del usuario. |
+| Escalabilidad | Volumen de datos | El sistema debe soportar al menos 500 estudiantes y 200 cursos sin degradación mayor al 20% del rendimiento. | Permite crecimiento del sistema sin rediseño inmediato. |
+| Usabilidad | Facilidad de uso | Un usuario nuevo debe completar el registro de una entidad en ≤ 2 minutos sin asistencia. | Reduce curva de aprendizaje y errores operativos. |
+| Seguridad | Control de acceso | El sistema debe restringir acceso a funcionalidades mediante autenticación y roles (admin/usuario). | Previene accesos no autorizados. |
+| Seguridad | Protección de datos | Los datos sensibles deben almacenarse utilizando mecanismos de cifrado estándar (ej. hashing para credenciales). | Evita exposición de información crítica. |
+| Disponibilidad | Tiempo operativo | El sistema debe estar disponible al menos el 95% del tiempo durante el periodo de uso. | Garantiza acceso continuo al sistema. |
+| Mantenibilidad | Modularidad | El sistema debe estar organizado en módulos independientes (frontend/backend) con bajo acoplamiento. | Facilita mantenimiento y evolución del sistema. |
+| Mantenibilidad | Testabilidad | Al menos el 70% de la lógica crítica debe ser cubierta por pruebas unitarias. | Reduce errores en cambios futuros. |
+
+---
+
+# 4. Notas de Refinamiento
+
+Durante la especificación de requerimientos se identificaron términos ambiguos en la descripción inicial, los cuales fueron transformados en métricas verificables bajo el enfoque SMART:
+
+- “Procesamiento rápido” → definido como ≤ 10 segundos para generación de horarios  
+- “Sistema usable” → definido como registro en ≤ 2 minutos sin asistencia  
+- “Alta seguridad” → definido mediante control de acceso y cifrado  
+- “Escalable” → definido como soporte de volumen específico con tolerancia de degradación  
+
+Estas transformaciones permiten que cada requerimiento sea medible, verificable y alineado con pruebas objetivas de cumplimiento (Pasa/No pasa), asegurando la viabilidad técnica del sistema.
 
 ---
 
