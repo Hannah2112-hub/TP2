@@ -1,7 +1,7 @@
 # Proyecto: Generador de Horarios Académicos
 
 ## Tabla de Contenidos
-- [Visión del Proyecto](#vision-del-proyecto)
+- [Declaración de la Visión del Proyecto](#vision-del-proyecto)
 - [Enfoque del Proyecto](#enfoque-del-proyecto)
 - [Problema](#problema)
 - [Backlog](#backlog)
@@ -14,8 +14,13 @@
 
 ## Visión del Proyecto
 
-El **Generador de Horarios Académicos** es una solución diseñada para automatizar la creación de horarios en instituciones educativas. Su objetivo es optimizar la asignación de cursos, docentes y aulas, reduciendo conflictos y mejorando la eficiencia en la planificación académica.
-
+Para coordinadores académicos y estudiantes
+Que necesitan optimizar la planificación de horarios
+El sistema HorarioSmart
+Es una aplicación web inteligente
+Que permite generar horarios académicos automáticamente sin conflictos
+A diferencia de los métodos manuales tradicionales
+Nuestro sistema utiliza algoritmos de optimización para mejorar la eficiencia y calidad de los horarios generados
 ---
 
 ## Enfoque del Proyecto
