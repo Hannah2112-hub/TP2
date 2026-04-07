@@ -74,8 +74,10 @@ Este proyecto busca resolver estos problemas mediante automatización inteligent
 ## Equipo
 
 - Desarrollador(es):  
-  - (Agregar nombres aquí)
-
+  - Escobar Bendezu Aldrin Edwin
+  - Lopez Rodriguez Axel Andre
+  - Meza Calderon Ana Cristina
+    
 - Roles:  
   - Backend  
   - Frontend  
@@ -88,15 +90,96 @@ Este proyecto busca resolver estos problemas mediante automatización inteligent
 
 ### Supuestos
 
-- Los docentes tienen horarios definidos previamente  
-- Las aulas tienen capacidades conocidas  
-- Cada curso requiere un horario específico  
+Para el desarrollo del Producto Mínimo Viable (PMV), se establecen los siguientes supuestos:
+
+- La información ingresada al sistema es correcta, completa y actualizada.  
+  Esto permite evitar errores en la generación de horarios, ya que el sistema depende directamente de la calidad de los datos.
+
+- Los prerrequisitos de los cursos están correctamente definidos.  
+  Se asume esta condición para garantizar la coherencia académica sin necesidad de validar estructuras complejas en el PMV.
+
+- Los docentes cuentan con una disponibilidad previamente registrada.  
+  Esto facilita la asignación automática de horarios respetando sus restricciones de tiempo.
+
+- Los estudiantes seleccionan cursos dentro del rango permitido de créditos.  
+  Permite simplificar la lógica inicial del sistema, evitando validaciones complejas adicionales.
+
+- Las aulas poseen características definidas (capacidad, tipo, equipamiento).  
+  Esto permite asignar espacios adecuados según las necesidades de cada curso.
+
+- El sistema operará inicialmente en un entorno controlado.  
+  Reduce la complejidad en las primeras etapas del desarrollo.
+
+- No se considerarán cambios en tiempo real durante la generación del horario.  
+  Esto simplifica el algoritmo en el PMV, permitiendo enfocarse en la generación inicial.
+
+---
 
 ### Restricciones
 
-- Un docente no puede estar en dos clases simultáneamente  
-- Un aula no puede ser asignada a más de un curso al mismo tiempo  
-- Se deben respetar los horarios disponibles  
+#### a) Restricciones técnicas
+
+- Limitación en la capacidad de procesamiento.  
+  El sistema debe generar soluciones en tiempos razonables, lo cual limita la complejidad de los algoritmos utilizados.
+
+- Implementación en arquitectura web (SPA + API REST).  
+  Responde a los lineamientos del proyecto y garantiza separación de responsabilidades.
+
+---
+
+#### b) Restricciones académicas
+
+- Cumplimiento obligatorio de prerrequisitos.  
+  Garantiza la coherencia en la formación académica de los estudiantes.
+
+- Límite de créditos por estudiante (20–22).  
+  Evita sobrecarga académica y asegura cumplimiento de normativas institucionales.
+
+- Asignación coherente según plan de estudios.  
+  Permite mantener la estructura curricular definida.
+
+---
+
+#### c) Restricciones operativas
+
+- Disponibilidad limitada de docentes.  
+  Reduce las combinaciones posibles y afecta la generación de horarios.
+
+- Disponibilidad limitada de aulas.  
+  Obliga a optimizar el uso de espacios físicos.
+
+- Restricciones de horarios institucionales.  
+  Limita los bloques de tiempo disponibles para asignación.
+
+---
+
+#### d) Restricciones sociales
+
+- Equidad en la asignación de horarios.  
+  Busca evitar favoritismos o distribución desigual de horarios.
+
+- Evitar sobrecarga en horarios pico.  
+  Mejora la experiencia de estudiantes y docentes.
+
+---
+
+#### e) Restricciones de seguridad
+
+- Protección de datos personales.  
+  Necesaria para cumplir con normativas de privacidad.
+
+- Control de acceso basado en roles.  
+  Garantiza que cada usuario acceda solo a la información correspondiente.
+
+---
+
+#### f) Restricciones ambientales
+
+- Uso eficiente de recursos computacionales.  
+  Permite reducir costos operativos y mejorar rendimiento.
+
+- Minimización del consumo energético.  
+  Alineado con prácticas de desarrollo sostenible (Green Software).
 
 ---
 
