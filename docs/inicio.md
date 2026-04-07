@@ -229,7 +229,7 @@ El alcance del sistema incluye la generación de horarios válidos en función d
 
 A continuación se presenta la imagen del Project Charter del proyecto:
 
-![Project Charter](docs/Project-charter.png)
+![Project Charter](docs/Project-charter.png.png)
 
 > Nota: Asegúrate de colocar la imagen en la ruta `docs/project-charter.png` dentro del repositorio. Puedes cambiar la ruta si tu imagen está en otra carpeta.
 
