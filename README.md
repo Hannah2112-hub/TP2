@@ -14,6 +14,7 @@
 
 ## Visión del Proyecto
 
+-
 Para coordinadores académicos y estudiantes
 Que necesitan optimizar la planificación de horarios
 El sistema HorarioSmart
