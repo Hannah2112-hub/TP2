@@ -14,13 +14,13 @@
 
 ## Declaración De la Visión del Proyecto
 
-- Para coordinadores académicos y estudiantes
-- Que necesitan optimizar la planificación de horarios
-- El sistema HorarioSmart
-- Es una aplicación web inteligente
-- Que permite generar horarios académicos automáticamente sin conflictos
-- A diferencia de los métodos manuales tradicionales
-- Nuestro sistema utiliza algoritmos de optimización para mejorar la eficiencia y calidad de los horarios generados
+Para coordinadores académicos y estudiantes<br>
+Que necesitan optimizar la planificación de horarios<br>
+El sistema HorarioSmart<br>
+Es una aplicación web inteligente<br>
+Que permite generar horarios académicos automáticamente sin conflictos<br>
+A diferencia de los métodos manuales tradicionales<br>
+Nuestro sistema utiliza algoritmos de optimización para mejorar la eficiencia y calidad de los horarios generados<br>
   
 ---
 
