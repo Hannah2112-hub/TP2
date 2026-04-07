@@ -347,16 +347,6 @@ El alcance del sistema incluye la generación de horarios válidos en función d
 
 ---
 
-## Project Charter
-
-A continuación se presenta la imagen del Project Charter del proyecto:
-
-![Project Charter](docs/Project-charter.png.png)
-
-> Nota: Asegúrate de colocar la imagen en la ruta `docs/project-charter.png` dentro del repositorio. Puedes cambiar la ruta si tu imagen está en otra carpeta.
-
----
-
 # 4. Notas de Refinamiento
 
 Durante la especificación de requerimientos se identificaron términos ambiguos en la descripción inicial, los cuales fueron transformados en métricas verificables bajo el enfoque SMART:
