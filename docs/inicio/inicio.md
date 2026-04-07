@@ -2,10 +2,10 @@
 
 ## Tabla de Contenidos
 - [Declaracion de la Visión del Proyecto](#vision-del-proyecto)
-- [Enfoque del Proyecto](#enfoque-del-proyecto)
+- [Selección del Enfoque del Proyecto](#selección-del-enfoque-del-proyecto)
 - [Problema](#problema)
 - [Backlog](#backlog)
-- [Equipo](#equipo)
+- [Declaración del Equipo del Proyecto](#declaración-del-equipo-del-proyecto)
 - [Supuestos y Restricciones](#supuestos-y-restricciones)
 - [Requerimientos](#requerimientos)
 - [Repositorio](#repositorio)
