@@ -193,18 +193,65 @@ Este proyecto busca resolver estos problemas mediante automatización inteligent
 
 ---
 
-## Equipo
+## Declaración del Equipo del Proyecto
 
-- Desarrollador(es):  
-  - Escobar Bendezu Aldrin Edwin
-  - Lopez Rodriguez Axel Andre
-  - Meza Calderon Ana Cristina
-    
-- Roles:  
-  - Backend  
-  - Frontend  
-  - Análisis  
-  - Testing  
+### 1.1 Integrantes del equipo
+
+- Escobar Bendezú, Aldrin  
+- Lopez Rodriguez, Axel  
+- Meza Calderón, Ana Cristina  
+
+### 1.2 Organización y roles
+
+El equipo adopta una estructura colaborativa basada en la metodología Scrum, asignando roles principales según las competencias de cada integrante:
+
+- **Backend Developer (Aldrin Escobar):**  
+  Responsable del desarrollo de la lógica de negocio, modelado del problema, implementación de la API REST y gestión de la base de datos. Además, se encarga de la integración de algoritmos para la generación de horarios.
+
+- **Frontend Developer (Axel Lopez):**  
+  Responsable del diseño e implementación de la interfaz de usuario mediante Angular, asegurando una experiencia de usuario adecuada y la correcta comunicación con el backend.
+
+- **Analista / Documentación / Integración (Cristina Meza):**  
+  Responsable del análisis del problema, modelado conceptual, elaboración de documentación técnica y coordinación de la integración entre frontend y backend.
+
+- **Scrum Master (Aldrin Escobar):**  
+  Responsable de asumir las funciones de Scrum Master, facilitando la organización del trabajo, la planificación de sprints y el seguimiento del progreso, promoviendo el cumplimiento de las prácticas ágiles.
+
+### 1.3 Responsabilidades del equipo
+
+El equipo se compromete a:
+
+- Cumplir con los objetivos definidos en cada sprint  
+- Mantener actualizado el backlog del proyecto  
+- Garantizar la calidad del código mediante revisiones internas  
+- Documentar adecuadamente los avances del sistema  
+- Coordinar la integración continua entre los distintos componentes  
+
+### 1.4 Normas de trabajo
+
+Para asegurar una correcta organización colaborativa, el equipo establece las siguientes normas:
+
+- Uso obligatorio de control de versiones mediante Git y GitHub  
+- Realización de commits frecuentes y descriptivos  
+- Comunicación constante entre los integrantes del equipo  
+- Revisión del trabajo antes de integrarlo al repositorio principal  
+- Cumplimiento de las tareas asignadas en cada sprint  
+- Participación activa en la planificación y seguimiento del proyecto  
+
+### 1.5 Metodología de trabajo
+
+El equipo trabajará bajo un enfoque ágil utilizando Scrum, organizando el desarrollo en sprints. Para ello, se emplearán prácticas como:
+
+- Planificación de sprints  
+- Definición de backlog  
+- Seguimiento del progreso  
+- Entregas incrementales de funcionalidades  
+
+Asimismo, se utilizarán herramientas como GitHub para la gestión del código y control de versiones, promoviendo:
+
+- Trabajo colaborativo  
+- Integración continua  
+- Desarrollo incremental del sistema  
 
 ---
 
