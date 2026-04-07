@@ -1,7 +1,7 @@
 # Proyecto: HorarioSmart
 
 ## Tabla de Contenidos
-- [Visión del Proyecto](#vision-del-proyecto)
+- [Declaracion de la Visión del Proyecto](#vision-del-proyecto)
 - [Enfoque del Proyecto](#enfoque-del-proyecto)
 - [Problema](#problema)
 - [Backlog](#backlog)
