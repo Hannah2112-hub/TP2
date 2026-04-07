@@ -1,125 +1,122 @@
-# Proyecto: Generador de Horarios Académicos
+# Generador de Horarios Académicos
 
-## Tabla de Contenidos
-- [Declaración de la Visión del Proyecto](#vision-del-proyecto)
-- [Enfoque del Proyecto](#enfoque-del-proyecto)
-- [Problema](#problema)
-- [Backlog](#backlog)
-- [Equipo](#equipo)
-- [Supuestos y Restricciones](#supuestos-y-restricciones)
-- [Requerimientos](#requerimientos)
-- [Repositorio](#repositorio)
-
----
-
-## Declaración De la Visión del Proyecto
-
-Para coordinadores académicos y estudiantes<br>
-Que necesitan optimizar la planificación de horarios<br>
-El sistema HorarioSmart<br>
-Es una aplicación web inteligente<br>
-Que permite generar horarios académicos automáticamente sin conflictos<br>
-A diferencia de los métodos manuales tradicionales<br>
-Nuestro sistema utiliza algoritmos de optimización para mejorar la eficiencia y calidad de los horarios generados<br>
-  
----
-
-## Enfoque del Proyecto
-
-El proyecto se basa en un enfoque orientado a la optimización, utilizando:
-
-- Algoritmos de asignación automática  
-- Restricciones académicas (disponibilidad, capacidad, horarios)  
-- Minimización de conflictos (cruces de clases, docentes duplicados, etc.)  
-- Interfaz amigable para la gestión de horarios  
-
-Se busca una solución escalable que pueda adaptarse a diferentes instituciones educativas.
+## Tabla de Contenido
+- [Nombre del proyecto](#nombre-del-proyecto)
+- [Integrantes del equipo](#integrantes-del-equipo)
+- [Problemática abordada](#problemática-abordada)
+- [Justificación del PMV](#justificación-del-pmv)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Arquitectura del sistema](#arquitectura-del-sistema)
+- [Instrucciones de instalación](#instrucciones-de-instalación)
+- [Instrucciones de build](#instrucciones-de-build)
+- [Instrucciones de despliegue](#instrucciones-de-despliegue)
+- [Video explicativo](#video-explicativo)
+- [Documentación](#documentación)
 
 ---
 
-## Problema
+## Nombre del proyecto
 
-La generación manual de horarios académicos presenta múltiples dificultades:
-
-- Conflictos entre cursos y docentes  
-- Uso ineficiente de aulas  
-- Alto consumo de tiempo en planificación  
-- Errores humanos frecuentes  
-
-Este proyecto busca resolver estos problemas mediante automatización inteligente.
+**HorarioSmart – Generador de Horarios Académicos**
 
 ---
 
-## Backlog
+## Integrantes del equipo
 
-### Funcionalidades principales
-
-- [ ] Registro de cursos  
-- [ ] Registro de docentes  
-- [ ] Registro de aulas  
-- [ ] Definición de disponibilidad de docentes  
-- [ ] Generación automática de horarios  
-- [ ] Visualización de horarios  
-- [ ] Edición manual de horarios  
-- [ ] Validación de conflictos  
-
-### Mejoras futuras
-
-- [ ] Exportación a PDF/Excel  
-- [ ] Integración con sistemas académicos  
-- [ ] Uso de inteligencia artificial para optimización avanzada  
+- Escobar Benbezú Aldrin Edwin
+- Lopez Rodriguez Axel Andre
+- Meza Calderon Ana Cristina
 
 ---
 
-## Equipo
+## Problemática abordada
 
-- Desarrollador(es):  
-  - (Agregar nombres aquí)
-
-- Roles:  
-  - Backend  
-  - Frontend  
-  - Análisis  
-  - Testing  
+La planificación de horarios académicos en instituciones educativas suele realizarse de forma manual, lo que genera diversos problemas como conflictos entre cursos, cruces de docentes, mala asignación de aulas y un alto consumo de tiempo. Además, este proceso es propenso a errores humanos, afectando la eficiencia operativa y la calidad del servicio educativo.
 
 ---
 
-## Supuestos y Restricciones
+## Justificación del PMV
 
-### Supuestos
-
-- Los docentes tienen horarios definidos previamente  
-- Las aulas tienen capacidades conocidas  
-- Cada curso requiere un horario específico  
-
-### Restricciones
-
-- Un docente no puede estar en dos clases simultáneamente  
-- Un aula no puede ser asignada a más de un curso al mismo tiempo  
-- Se deben respetar los horarios disponibles  
+El Producto Mínimo Viable (PMV) de **HorarioSmart** se enfoca en resolver el problema principal: la generación automática de horarios sin conflictos. Esto permite validar rápidamente la utilidad del sistema, reduciendo tiempos de planificación y mejorando la organización académica. El PMV prioriza funcionalidades clave como el registro de datos básicos y la generación automática de horarios, dejando mejoras avanzadas para futuras iteraciones.
 
 ---
 
-## Requerimientos
+## Tecnologías utilizadas
 
-### Requerimientos Funcionales
-
-- RF01: Registrar cursos, docentes y aulas  
-- RF02: Definir disponibilidad de docentes  
-- RF03: Generar horarios automáticamente  
-- RF04: Detectar conflictos  
-- RF05: Permitir edición manual de horarios  
-
-### Requerimientos No Funcionales
-
-- RNF01: Interfaz amigable  
-- RNF02: Tiempo de generación eficiente  
-- RNF03: Escalabilidad del sistema  
-- RNF04: Seguridad en el manejo de datos  
+| Componente          | Tecnología   |
+|---------------------|--------------|
+| Backend             | FastAPI      |
+| Frontend            | Angular      |
+| Base de datos       | SQL Server   |
+| Control de versiones| GitHub       |
+| Lenguaje principal  | Python       |
 
 ---
 
-## Repositorio
+## Arquitectura del sistema
 
-Repositorio del proyecto:  
-👉 https://github.com/Hannah2112-hub/TP2
+El sistema sigue una arquitectura cliente-servidor:
+
+- **Frontend:** Interfaz desarrollada en Angular para la interacción con el usuario.
+- **Backend:** API REST construida con FastAPI que gestiona la lógica del sistema.
+- **Base de datos:** SQL Server para almacenamiento de información.
+- **Comunicación:** HTTP/JSON entre cliente y servidor.
+
+---
+
+## Instrucciones de instalación
+
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/Hannah2112-hub/TP2
+   ```
+
+2. Acceder al proyecto:
+   ```bash
+   cd TP2
+   ```
+
+3. Instalar dependencias del backend:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Instalar dependencias del frontend:
+   ```bash
+   npm install
+   ```
+
+---
+
+## Instrucciones de build
+
+**Backend:**
+```bash
+uvicorn main:app --reload
+```
+
+**Frontend:**
+```bash
+npm run build
+```
+
+---
+
+## Instrucciones de despliegue
+
+1. Configurar la base de datos en SQL Server.
+2. Actualizar variables de entorno (credenciales, puertos, etc.).
+3. Ejecutar el backend en un servidor (ej: Uvicorn o Docker).
+4. Desplegar el frontend en un servidor web (ej: Nginx).
+
+---
+
+## Video explicativo
+
+👉 *(Agregar enlace al video – máximo 5 minutos)*
+
+---
+
+## Documentación
+
+👉 Revisar la carpeta [`docs/`](./docs) dentro del repositorio para más detalles técnicos y funcionales.
