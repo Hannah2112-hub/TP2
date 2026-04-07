@@ -158,6 +158,7 @@ El enfoque metodológico y tecnológico seleccionado permite abordar de manera e
 
 La combinación de Scrum, Angular y FastAPI proporciona una base sólida para el desarrollo incremental del sistema, garantizando escalabilidad, mantenibilidad y eficiencia en la generación de horarios académicos.
 
+---
 
 ## Problema
 
