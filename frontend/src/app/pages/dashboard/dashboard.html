@@ -1,0 +1,569 @@
+<div class="app">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <span class="sidebar-title">Sistema académico</span>
+    </div>
+    <div class="nav-items">
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'dashboard'"
+        (click)="navigate('dashboard')"
+      >
+        <i class="fas fa-chart-pie"></i> Panel principal
+      </div>
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'estudiantes'"
+        (click)="navigate('estudiantes')"
+      >
+        <i class="fas fa-user-graduate"></i> Estudiantes
+      </div>
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'docentes'"
+        (click)="navigate('docentes')"
+      >
+        <i class="fas fa-chalkboard-teacher"></i> Docentes
+      </div>
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'cursos'"
+        (click)="navigate('cursos')"
+      >
+        <i class="fas fa-book"></i> Cursos
+      </div>
+      <div class="nav-item" [class.active]="currentPage() === 'aulas'" (click)="navigate('aulas')">
+        <i class="fas fa-door-open"></i> Aulas
+      </div>
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'matricula'"
+        (click)="navigate('matricula')"
+      >
+        <i class="fas fa-check-circle"></i> Matrícula
+      </div>
+      <div
+        class="nav-item"
+        [class.active]="currentPage() === 'horarios'"
+        (click)="navigate('horarios')"
+      >
+        <i class="fas fa-calendar-alt"></i> Horarios
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar"><i class="fas fa-user"></i></div>
+        <div class="user-details">
+          <span class="user-name">{{ auth.currentUserName() }}</span>
+          <span class="user-type-label">{{ auth.currentUserType() }}</span>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="main">
+    @if (mensaje()) {
+      <div
+        class="alert"
+        [class.alert-success]="mensajeTipo() === 'success'"
+        [class.alert-error]="mensajeTipo() === 'error'"
+        [class.alert-info]="mensajeTipo() === 'info'"
+      >
+        {{ mensaje() }}
+      </div>
+    }
+
+    <!-- DASHBOARD -->
+    @if (currentPage() === 'dashboard') {
+      <div class="page active">
+        <h2>Panel principal</h2>
+        <div class="cards">
+          <div class="metric">
+            <div class="metric-icon"><i class="fas fa-users"></i></div>
+            <div class="metric-content">
+              <div class="metric-label">Estudiantes</div>
+              <div class="metric-value">{{ stats()['total_estudiantes'] || 0 }}</div>
+            </div>
+          </div>
+          <div class="metric">
+            <div class="metric-icon doc"><i class="fas fa-chalkboard-teacher"></i></div>
+            <div class="metric-content">
+              <div class="metric-label">Docentes</div>
+              <div class="metric-value">{{ stats()['total_docentes'] || 0 }}</div>
+            </div>
+          </div>
+          <div class="metric">
+            <div class="metric-icon course"><i class="fas fa-book"></i></div>
+            <div class="metric-content">
+              <div class="metric-label">Cursos</div>
+              <div class="metric-value">{{ stats()['total_cursos'] || 0 }}</div>
+            </div>
+          </div>
+          <div class="metric">
+            <div class="metric-icon room"><i class="fas fa-door-open"></i></div>
+            <div class="metric-content">
+              <div class="metric-label">Aulas</div>
+              <div class="metric-value">{{ stats()['total_aulas'] || 0 }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-clock"></i> Matrículas recientes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Estudiante</th>
+                <th>Curso</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (m of matriculas().slice(-5); track $index) {
+                <tr>
+                  <td>{{ m.nombreEstudiante || m.estudiante }}</td>
+                  <td>{{ m.nombreCurso || m.curso }}</td>
+                  <td>
+                    <span
+                      class="badge"
+                      [class.badge-ok]="m.estado === 'Aprobada' || m.estado === 'Pendiente'"
+                      [class.badge-err]="m.estado !== 'Aprobada' && m.estado !== 'Pendiente'"
+                      >{{ m.estado === 'Aprobada' || m.estado === 'Pendiente' ? 'Aprobada' : 'No Aprobada' }}</span
+                    >
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-bolt"></i> Acciones rápidas</h3>
+          <div class="quick-actions">
+            <button class="btn btn-primary" (click)="navigate('matricula')">
+              <i class="fas fa-plus"></i> Nueva matrícula
+            </button>
+            <button class="btn" (click)="navigate('horarios')">
+              <i class="fas fa-calendar"></i> Ver horarios
+            </button>
+            <button class="btn" (click)="navigate('estudiantes')">
+              <i class="fas fa-user-plus"></i> Registrar estudiante
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ESTUDIANTES -->
+    @if (currentPage() === 'estudiantes') {
+      <div class="page active">
+        <h2>Estudiantes</h2>
+        <div class="card">
+          <h3><i class="fas fa-user-plus"></i> Registrar nuevo estudiante</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre completo</label>
+              <input [(ngModel)]="estNombre" placeholder="Ej. Ana García" />
+            </div>
+            <div class="form-group">
+              <label>Código</label>
+              <input [(ngModel)]="estCodigo" placeholder="Ej. EST-001" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Créditos acumulados</label>
+              <input type="number" [(ngModel)]="estCreditos" min="0" value="0" />
+            </div>
+            <div class="form-group">
+              <label>Correo</label>
+              <input [(ngModel)]="estCorreo" placeholder="correo@uni.edu" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="registrarEstudiante()">
+              <i class="fas fa-save"></i> Registrar estudiante
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Lista de estudiantes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Créditos</th>
+                <th>Correo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (e of estudiantes(); track e.codigo; let i = $index) {
+                <tr>
+                  <td>
+                    <span class="badge badge-info">{{ e.codigo }}</span>
+                  </td>
+                  <td>{{ e.nombre }}</td>
+                  <td>{{ e.creditos }}</td>
+                  <td>{{ e.correo }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="eliminarEstudiante(e)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- DOCENTES -->
+    @if (currentPage() === 'docentes') {
+      <div class="page active">
+        <h2>Docentes</h2>
+        <div class="card">
+          <h3><i class="fas fa-user-plus"></i> Registrar nuevo docente</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre completo</label>
+              <input [(ngModel)]="docNombre" placeholder="Ej. Dr. Pérez" />
+            </div>
+            <div class="form-group">
+              <label>Código</label>
+              <input [(ngModel)]="docCodigo" placeholder="Ej. DOC-001" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Especialidad</label>
+              <input [(ngModel)]="docEsp" placeholder="Ej. Matemáticas" />
+            </div>
+            <div class="form-group">
+              <label>Correo</label>
+              <input [(ngModel)]="docCorreo" placeholder="correo@uni.edu" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="registrarDocente()">
+              <i class="fas fa-save"></i> Registrar docente
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Lista de docentes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Especialidad</th>
+                <th>Correo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (d of docentes(); track d.codigo; let i = $index) {
+                <tr>
+                  <td>
+                    <span class="badge badge-info">{{ d.codigo }}</span>
+                  </td>
+                  <td>{{ d.nombre }}</td>
+                  <td>{{ d.especialidad }}</td>
+                  <td>{{ d.correo }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="eliminarDocente(d)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- CURSOS -->
+    @if (currentPage() === 'cursos') {
+      <div class="page active">
+        <h2>Cursos</h2>
+        <div class="card">
+          <h3><i class="fas fa-book-medical"></i> Registrar nuevo curso</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre del curso</label>
+              <input [(ngModel)]="curNombre" placeholder="Ej. Cálculo I" />
+            </div>
+            <div class="form-group">
+              <label>Código</label>
+              <input [(ngModel)]="curCodigo" placeholder="Ej. MAT-101" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Créditos requeridos</label>
+              <input type="number" [(ngModel)]="curCreditos" min="0" value="0" />
+            </div>
+            <div class="form-group">
+              <label>Prerrequisito (código, opcional)</label>
+              <input [(ngModel)]="curPrereq" placeholder="Ej. MAT-100" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Docente</label>
+              <select [(ngModel)]="curDocente">
+                @for (d of docentes(); track d.codigo) {
+                  <option [value]="d.id">{{ d.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Cupos</label>
+              <input type="number" [(ngModel)]="curCupos" min="1" value="30" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="registrarCurso()">
+              <i class="fas fa-save"></i> Registrar curso
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Lista de cursos</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Créditos</th>
+                <th>Prerrequisito</th>
+                <th>Docente</th>
+                <th>Cupos</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of cursos(); track c.codigo; let i = $index) {
+                <tr>
+                  <td>
+                    <span class="badge badge-info">{{ c.codigo }}</span>
+                  </td>
+                  <td>{{ c.nombre }}</td>
+                  <td>{{ c.creditos }}</td>
+                  <td>{{ c.prereq || '—' }}</td>
+                  <td>{{ c.nombreDocente || '—' }}</td>
+                  <td>{{ c.cupos }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="eliminarCurso(c)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- AULAS -->
+    @if (currentPage() === 'aulas') {
+      <div class="page active">
+        <h2>Aulas</h2>
+        <div class="card">
+          <h3><i class="fas fa-door-open"></i> Registrar nueva aula</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre/Número</label>
+              <input [(ngModel)]="aulaNombre" placeholder="Ej. Aula 101" />
+            </div>
+            <div class="form-group">
+              <label>Capacidad</label>
+              <input type="number" [(ngModel)]="aulaCap" min="1" value="40" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Edificio</label>
+              <input [(ngModel)]="aulaEdificio" placeholder="Ej. Pabellón A" />
+            </div>
+            <div class="form-group">
+              <label>Equipamiento</label>
+              <input [(ngModel)]="aulaEquip" placeholder="Ej. Proyector, PC" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="registrarAula()">
+              <i class="fas fa-save"></i> Registrar aula
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Lista de aulas</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Capacidad</th>
+                <th>Edificio</th>
+                <th>Equipamiento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (a of aulas(); track a.nombre; let i = $index) {
+                <tr>
+                  <td>{{ a.nombre }}</td>
+                  <td>{{ a.capacidad }}</td>
+                  <td>{{ a.edificio }}</td>
+                  <td>{{ a.equipamiento }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="eliminarAula(a)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- MATRÍCULA -->
+    @if (currentPage() === 'matricula') {
+      <div class="page active">
+        <h2>Validación de matrícula</h2>
+        <div class="card">
+          <h3><i class="fas fa-clipboard-check"></i> Registrar matrícula</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Estudiante</label>
+              <select [(ngModel)]="matEstudiante">
+                @for (e of estudiantes(); track e.codigo) {
+                  <option [value]="e.id">{{ e.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Curso</label>
+              <select [(ngModel)]="matCurso">
+                @for (c of cursos(); track c.codigo) {
+                  <option [value]="c.id">{{ c.nombre }} (req. {{ c.creditos }} cr.)</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="validarMatricula()">
+              <i class="fas fa-check"></i> Validar y matricular
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-history"></i> Historial de matrículas</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Estudiante</th>
+                <th>Curso</th>
+                <th>Estado</th>
+                <th>Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (m of matriculas(); track $index) {
+                <tr>
+                  <td>{{ m.nombreEstudiante || m.estudiante }}</td>
+                  <td>{{ m.nombreCurso || m.curso }}</td>
+                  <td>
+                    <span
+                      class="badge"
+                      [class.badge-ok]="m.estado === 'Aprobada' || m.estado === 'Pendiente'"
+                      [class.badge-err]="m.estado !== 'Aprobada' && m.estado !== 'Pendiente'"
+                      >{{ m.estado === 'Aprobada' || m.estado === 'Pendiente' ? 'Aprobada' : 'No Aprobada' }}</span
+                    >
+                  </td>
+                  <td class="detail">{{ m.detalle }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- HORARIOS -->
+    @if (currentPage() === 'horarios') {
+      <div class="page active">
+        <h2>Horarios</h2>
+        <div class="card">
+          <h3><i class="fas fa-magic"></i> Generación automática de horarios</h3>
+          <div class="form-row schedule">
+            <div class="form-group">
+              <label>Hora inicio</label>
+              <select [(ngModel)]="horInicio">
+                <option [value]="7">07:00</option>
+                <option [value]="8">08:00</option>
+                <option [value]="9">09:00</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Bloque por clase (hrs)</label>
+              <select [(ngModel)]="horBloque">
+                <option [value]="1">1 hora</option>
+                <option [value]="2">2 horas</option>
+                <option [value]="3">3 horas</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" (click)="generarHorarios()">
+              <i class="fas fa-cogs"></i> Generar horarios
+            </button>
+          </div>
+        </div>
+
+        @if (horario().length > 0) {
+          <div class="card">
+            <h3><i class="fas fa-calendar-week"></i> Horario generado</h3>
+            <div class="horario-grid">
+              <div class="horario-header"></div>
+              @for (d of dias; track d) {
+                <div class="horario-header">{{ d }}</div>
+              }
+              @for (h of getHoras(); track h) {
+                <div class="horario-hora" style="font-size: 10px; padding: 6px;">
+                  {{ pad(h) }}:00<br><span style="opacity: 0.6; font-size: 9px;">- {{ pad(h + horBloque() * 1) }}:00</span>
+                </div>
+                @for (d of dias; track d) {
+                  <div class="horario-cell" [class.horario-empty]="getClases(d, h).length === 0">
+                    @for (cls of getClases(d, h); track cls.id) {
+                      <div class="horario-item" [ngClass]="cls.color" style="padding: 6px; border-radius: 6px; margin-bottom: 4px; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="hc-name">{{ cls.curso }}</div>
+                        <div class="hc-sub">{{ cls.docente }} · {{ cls.aula }}</div>
+                      </div>
+                    }
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

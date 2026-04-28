@@ -1,0 +1,6 @@
+from .estudiante_repository import EstudianteRepository
+from .docente_repository import DocenteRepository
+from .aula_repository import AulaRepository
+from .curso_repository import CursoRepository
+from .matricula_repository import MatriculaRepository
+from .horario_repository import HorarioRepository, DashboardRepository
