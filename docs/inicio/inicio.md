@@ -7,6 +7,7 @@
 - [Backlog](#backlog)
 - [Declaración del Equipo del Proyecto](#declaración-del-equipo-del-proyecto)
 - [Supuestos y Restricciones](#supuestos-y-restricciones)
+- [Criterios de optimización](#criterios-de-optimización)
 - [Requerimientos](#requerimientos)
 - [Repositorio](#repositorio)
 
@@ -352,7 +353,45 @@ Para el desarrollo del Producto Mínimo Viable (PMV), se establecen los siguient
   Alineado con prácticas de desarrollo sostenible (Green Software).
 
 ---
+## Criterios de optimización
 
+El problema se modela como un problema de **optimización multiobjetivo**, donde se busca generar horarios válidos y, además, optimizar su calidad considerando múltiples criterios.
+
+#### 1 Eficiencia en el uso de recursos
+- Maximizar el uso de aulas, reduciendo espacios ociosos  
+- Asignar aulas adecuadas según capacidad y características del curso  
+
+#### 2 Optimización de horarios
+- Minimizar tiempos muertos entre clases (huecos)  
+- Evitar horarios extremos (muy temprano o muy tarde)  
+- Agrupar clases en bloques continuos cuando sea posible  
+- Evitar cruces de horarios entre cursos matriculados  
+- Reducir tiempos muertos entre clases  
+- Distribuir la carga académica de manera equilibrada durante la semana  
+
+#### 3 Distribución temporal equilibrada
+- Evitar sobrecarga en horas pico  
+- Distribuir cursos a lo largo del día  
+- Balancear la carga entre días de la semana  
+
+#### 4 Minimización de conflictos y ajustes
+- Reducir la necesidad de modificaciones manuales posteriores  
+- Minimizar reasignaciones una vez generado el horario  
+- Garantizar estabilidad del horario ante cambios  
+
+#### 5 Prioridad académica
+- Priorizar cursos obligatorios sobre electivos  
+- Garantizar disponibilidad para cursos críticos del plan de estudios  
+
+#### 6 Calidad global del horario
+- Maximizar la satisfacción general de los usuarios  
+- Generar horarios consistentes y predecibles  
+- Optimizar múltiples objetivos simultáneamente  
+
+#### 7 Eficiencia computacional
+- Reducir el tiempo de generación del horario  
+- Garantizar soluciones en tiempos razonables incluso con alta carga  
+---
 ## Requerimientos
 
 ### Requerimientos Funcionales
