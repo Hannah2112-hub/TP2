@@ -11,6 +11,9 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "pydantic-settings>=2.0.0",
     "email-validator>=2.0.0",
+    "seleniumbase>=4.48.2",
+    "webdriver-manager>=4.0.2",
+    "ortools>=9.15.6755",
 ]
 
 [dependency-groups]
