@@ -6,9 +6,11 @@ class CursoRepository:
     @staticmethod
     def get_all() -> List[Dict[str, Any]]:
         return execute_query("""
-            SELECT c.*, d.nombre || ' ' || d.apellido as nombredocente 
+            SELECT c.*, d.nombre || ' ' || d.apellido as nombredocente,
+                   car.nombre as nombrecarrera
             FROM cursos c 
-            LEFT JOIN docentes d ON c.docenteid = d.docenteid 
+            LEFT JOIN docentes d ON c.docenteid = d.docenteid
+            LEFT JOIN carreras car ON c.carreraid = car.carreraid
             WHERE c.activo = TRUE 
             ORDER BY c.nombre
         """)
@@ -26,12 +28,14 @@ class CursoRepository:
         prerequisito_id: Optional[int],
         docente_id: int,
         cupos: int,
+        carrera_id: Optional[int] = None,
     ) -> Dict[str, Any]:
         prerequisito = prerequisito_id if prerequisito_id else None
+        carrera = carrera_id if carrera_id else None
         result = execute_query(
-            """INSERT INTO cursos (codigo, nombre, creditosreq, prerequisitoid, docenteid, cupos) 
-               VALUES (%s, %s, %s, %s, %s, %s) RETURNING cursoid""",
-            [codigo, nombre, creditos_req, prerequisito, docente_id, cupos],
+            """INSERT INTO cursos (codigo, nombre, creditosreq, prerequisitoid, docenteid, cupos, carreraid) 
+               VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING cursoid""",
+            [codigo, nombre, creditos_req, prerequisito, docente_id, cupos, carrera],
         )
         if result:
             return {

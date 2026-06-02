@@ -1,0 +1,21 @@
+version: "1"
+services:
+  # Base URL where GreenFrame will start the analysis
+  target: http://localhost:3000
+  
+  # Backend and frontend containers to measure
+  containers:
+    - name: backend
+      image: "backend-image-name" # This should match the docker-compose service name if exists
+    - name: frontend
+      image: "frontend-image-name"
+      
+  # Database containers are separated for accurate I/O calculation
+  databaseContainers:
+    - name: database
+      image: "postgres:15-alpine" # Update with actual DB image
+
+# Test scenario
+scenarios:
+  - name: Flujo Principal
+    script: ./scenario.js

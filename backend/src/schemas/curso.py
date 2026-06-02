@@ -8,6 +8,7 @@ class CursoBase(BaseModel):
     creditosReq: int = 0
     prerequisitoID: Optional[int] = None
     docenteID: int
+    carreraID: Optional[int] = None
     cupos: int = 30
 
 

@@ -14,6 +14,12 @@ export interface Docente {
   correo: string;
 }
 
+export interface Carrera {
+  id?: number;
+  nombre: string;
+  facultad: string;
+}
+
 export interface Curso {
   id?: number;
   codigo: string;
@@ -21,8 +27,10 @@ export interface Curso {
   creditos: number;
   prereq: string;
   docente: string;
+  carrera: string;
   cupos: number;
   nombreDocente?: string;
+  nombreCarrera?: string;
 }
 
 export interface Aula {
@@ -53,6 +61,7 @@ export interface AsignacionHorario {
   horaFin: number;
   aula: string;
   color: string;
+  carreraId?: number;
 }
 
 export type TipoUsuario = 'admin' | 'docente' | 'estudiante';
