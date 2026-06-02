@@ -6,7 +6,7 @@ class HorarioRepository:
     @staticmethod
     def get_all() -> List[Dict[str, Any]]:
         return execute_query("""
-            SELECT h.*, c.nombre as nombrecurso, a.nombre as nombreaula
+            SELECT h.*, c.nombre as nombrecurso, a.nombre as nombreaula, c.carreraid
             FROM horarios h
             JOIN cursos c ON h.cursoid = c.cursoid
             JOIN aulas a ON h.aulaid = a.aulaid
@@ -16,8 +16,32 @@ class HorarioRepository:
 
     @staticmethod
     def create(
-        curso_id: int, aula_id: int, dia_semana: int, hora_inicio: str, hora_fin: str
+        curso_id: int, aula_id: int, dia_semana: str, hora_inicio: str, hora_fin: str
     ) -> Dict[str, Any]:
+        # Validar traslape del aula
+        traslape_aula = execute_query("""
+            SELECT 1 FROM horarios
+            WHERE aulaid = %s AND diasemana = %s AND activo = TRUE
+              AND (horainicio::TIME, horafin::TIME) OVERLAPS (%s::TIME, %s::TIME)
+        """, [aula_id, dia_semana, hora_inicio, hora_fin])
+        
+        if traslape_aula:
+            return {"Exito": False, "Mensaje": "El aula ya está ocupada en ese horario"}
+
+        # Validar traslape del docente
+        docente = execute_query("SELECT docenteid FROM cursos WHERE cursoid = %s", [curso_id])
+        if docente and docente[0].get('docenteid'):
+            docente_id = docente[0]['docenteid']
+            traslape_doc = execute_query("""
+                SELECT 1 FROM horarios h
+                JOIN cursos c ON h.cursoid = c.cursoid
+                WHERE c.docenteid = %s AND h.diasemana = %s AND h.activo = TRUE
+                  AND (h.horainicio::TIME, h.horafin::TIME) OVERLAPS (%s::TIME, %s::TIME)
+            """, [docente_id, dia_semana, hora_inicio, hora_fin])
+            
+            if traslape_doc:
+                return {"Exito": False, "Mensaje": "El docente ya tiene una clase asignada en ese horario"}
+
         result = execute_query(
             """INSERT INTO horarios (cursoid, aulaid, diasemana, horainicio, horafin) 
                VALUES (%s, %s, %s, %s, %s) RETURNING horarioid""",
@@ -27,7 +51,7 @@ class HorarioRepository:
             return {
                 "Exito": True,
                 "ID": result[0]["horarioid"],
-                "Mensaje": "Horario registrado",
+                "Mensaje": "Horario registrado exitosamente sin cruces",
             }
         return {"Exito": False, "Mensaje": "Error al registrar"}
 
@@ -39,13 +63,17 @@ class HorarioRepository:
         return True
 
     @staticmethod
-    def generar(hora_inicio_base: str = "08:00", bloques_horas: int = 2) -> Dict[str, Any]:
+    def generar(hora_inicio_base: str = "08:00", bloques_horas: int = 2, carrera_id: int | None = None) -> Dict[str, Any]:
         try:
             from ortools.sat.python import cp_model
             import random
 
             # 1. Obtener datos necesarios
-            cursos = execute_query("SELECT * FROM cursos WHERE activo = TRUE")
+            if carrera_id:
+                cursos = execute_query("SELECT * FROM cursos WHERE activo = TRUE AND carreraid = %s", [carrera_id])
+            else:
+                cursos = execute_query("SELECT * FROM cursos WHERE activo = TRUE")
+                
             aulas = execute_query("SELECT * FROM aulas WHERE activo = TRUE")
 
             if not cursos:
@@ -138,8 +166,14 @@ class HorarioRepository:
             status = solver.Solve(model)
 
             if status in [cp_model.OPTIMAL, cp_model.FEASIBLE]:
-                # Limpiar horarios activos anteriores si se encontró solución
-                execute_query("DELETE FROM horarios WHERE activo = TRUE")
+                # Limpiar horarios activos anteriores si se encontró solución (solo de los cursos de la carrera si aplica)
+                if carrera_id:
+                    execute_query(
+                        "DELETE FROM horarios WHERE cursoid IN (SELECT cursoid FROM cursos WHERE carreraid = %s) AND activo = TRUE", 
+                        [carrera_id]
+                    )
+                else:
+                    execute_query("DELETE FROM horarios WHERE activo = TRUE")
                 
                 horarios_creados = 0
                 for (c_idx, a_idx, s_idx), var in x.items():

@@ -22,6 +22,10 @@ import {
 export class DashboardComponent implements OnInit {
   currentPage = signal('dashboard');
 
+  // Formulario: Carrera
+  carNombre   = signal('');
+  carFacultad = signal('');
+
   // Formulario: Estudiante
   estNombre   = signal('');
   estCodigo   = signal('');
@@ -40,6 +44,7 @@ export class DashboardComponent implements OnInit {
   curCreditos  = signal(0);
   curPrereq    = signal('');
   curDocente   = signal('');
+  curCarrera   = signal('');
   curCupos     = signal(30);
 
   // Formulario: Aula
@@ -52,9 +57,15 @@ export class DashboardComponent implements OnInit {
   matEstudiante = signal('');
   matCurso      = signal('');
 
-  // Formulario: Horarios
+  // Formulario: Horarios Automáticos
+  horCarrera = signal('');
   horInicio = signal(9);
   horBloque = signal(2);
+  oferCurso  = signal('');
+  oferAula   = signal('');
+  oferDia    = signal(1);
+  oferHoraI  = signal('08:00');
+  oferHoraF  = signal('10:00');
 
   // Mensajes de feedback
   mensaje     = signal('');
@@ -65,12 +76,22 @@ export class DashboardComponent implements OnInit {
   stats = signal<Record<string, number>>({});
 
   // Datos reactivos desde el service
+  carreras    = computed(() => this.academicService.Carreras());
   docentes    = computed(() => this.academicService.Docentes());
   cursos      = computed(() => this.academicService.Cursos());
   estudiantes = computed(() => this.academicService.Estudiantes());
   aulas       = computed(() => this.academicService.Aulas());
   matriculas  = computed(() => this.academicService.Matriculas());
   horario     = computed(() => this.academicService.HorarioGenerado());
+
+  diasSemana  = [
+    { id: 1, nombre: 'Lunes' },
+    { id: 2, nombre: 'Martes' },
+    { id: 3, nombre: 'Miércoles' },
+    { id: 4, nombre: 'Jueves' },
+    { id: 5, nombre: 'Viernes' },
+    { id: 6, nombre: 'Sábado' }
+  ];
 
   dias    = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
   colores = ['hc-purple', 'hc-teal', 'hc-blue', 'hc-amber', 'hc-coral', 'hc-green'];
@@ -105,6 +126,33 @@ export class DashboardComponent implements OnInit {
   async refreshStats() {
     const s = await this.academicService.getEstadisticas();
     this.stats.set(s);
+  }
+
+  // ── CARRERAS ──────────────────────────────────────────────────────────────
+  async registrarCarrera() {
+    if (!this.carNombre() || !this.carFacultad()) {
+      this.showMsg('Nombre y facultad son requeridos', 'error');
+      return;
+    }
+    this.cargando.set(true);
+    const ok = await this.academicService.agregarCarrera({
+      nombre:   this.carNombre(),
+      facultad: this.carFacultad(),
+    });
+    this.cargando.set(false);
+    if (ok) {
+      this.showMsg('Carrera registrada correctamente', 'success');
+      this.carNombre.set(''); this.carFacultad.set('');
+      await this.refreshStats();
+    } else {
+      this.showMsg('Error al registrar la carrera', 'error');
+    }
+  }
+
+  async eliminarCarrera(item: any) {
+    const id = item.id ?? item;
+    await this.academicService.eliminarCarrera(id);
+    await this.refreshStats();
   }
 
   // ── ESTUDIANTES ────────────────────────────────────────────────────────────
@@ -178,12 +226,13 @@ export class DashboardComponent implements OnInit {
       creditos: this.curCreditos(),
       prereq:   this.curPrereq(),
       docente:  this.curDocente(),
+      carrera:  this.curCarrera(),
       cupos:    this.curCupos(),
     });
     this.cargando.set(false);
     if (ok) {
       this.showMsg('Curso registrado correctamente', 'success');
-      this.curNombre.set(''); this.curCodigo.set(''); this.curPrereq.set(''); this.curDocente.set('');
+      this.curNombre.set(''); this.curCodigo.set(''); this.curPrereq.set(''); this.curDocente.set(''); this.curCarrera.set('');
       await this.refreshStats();
     } else {
       this.showMsg('Error al registrar el curso', 'error');
@@ -251,9 +300,31 @@ export class DashboardComponent implements OnInit {
     const { ok, mensaje } = await this.academicService.generarHorarios(
       Number(this.horInicio()),
       Number(this.horBloque()),
+      this.horCarrera() ? Number(this.horCarrera()) : undefined
     );
     this.cargando.set(false);
     this.showMsg(mensaje, ok ? 'success' : 'error');
+  }
+
+  async registrarOfertaHoraria() {
+    const cId = Number(this.oferCurso());
+    const aId = Number(this.oferAula());
+    const d   = Number(this.oferDia());
+    const hI  = this.oferHoraI();
+    const hF  = this.oferHoraF();
+
+    if (!cId || !aId || !d || !hI || !hF) {
+      this.showMsg('Complete todos los campos del horario', 'error');
+      return;
+    }
+    
+    this.cargando.set(true);
+    const { ok, mensaje } = await this.academicService.agregarHorario(cId, aId, d, hI, hF);
+    this.cargando.set(false);
+    this.showMsg(mensaje, ok ? 'success' : 'error');
+    if (ok) {
+      this.oferCurso.set(''); this.oferAula.set('');
+    }
   }
 
   getHoras(): number[] {
@@ -268,8 +339,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getClases(dia: string, hora: number): AsignacionHorario[] {
+    const selectedCarrera = this.horCarrera() ? Number(this.horCarrera()) : null;
     return this.academicService
       .HorarioGenerado()
-      .filter((a) => a.dia === dia && a.horaInicio <= hora && a.horaFin > hora);
+      .filter((a) => {
+        if (selectedCarrera && a.carreraId !== selectedCarrera) return false;
+        return a.dia === dia && a.horaInicio <= hora && a.horaFin > hora;
+      });
   }
 }

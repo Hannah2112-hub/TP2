@@ -16,6 +16,13 @@
       </div>
       <div
         class="nav-item"
+        [class.active]="currentPage() === 'carreras'"
+        (click)="navigate('carreras')"
+      >
+        <i class="fas fa-university"></i> Carreras
+      </div>
+      <div
+        class="nav-item"
         [class.active]="currentPage() === 'estudiantes'"
         (click)="navigate('estudiantes')"
       >
@@ -156,6 +163,57 @@
               <i class="fas fa-user-plus"></i> Registrar estudiante
             </button>
           </div>
+        </div>
+      </div>
+    }
+
+    <!-- CARRERAS -->
+    @if (currentPage() === 'carreras') {
+      <div class="page active">
+        <h2>Carreras</h2>
+        <div class="card">
+          <h3><i class="fas fa-university"></i> Registrar nueva carrera</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre de la carrera</label>
+              <input [(ngModel)]="carNombre" placeholder="Ej. Ingeniería de Sistemas" />
+            </div>
+            <div class="form-group">
+              <label>Facultad</label>
+              <input [(ngModel)]="carFacultad" placeholder="Ej. Ingeniería" />
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="registrarCarrera()">
+              <i class="fas fa-save"></i> Registrar carrera
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><i class="fas fa-list"></i> Lista de carreras</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of carreras(); track c.nombre; let i = $index) {
+                <tr>
+                  <td>{{ c.nombre }}</td>
+                  <td>{{ c.facultad }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="eliminarCarrera(c)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
       </div>
     }
@@ -324,11 +382,23 @@
             <div class="form-group">
               <label>Docente</label>
               <select [(ngModel)]="curDocente">
+                <option value="">Seleccione...</option>
                 @for (d of docentes(); track d.codigo) {
                   <option [value]="d.id">{{ d.nombre }}</option>
                 }
               </select>
             </div>
+            <div class="form-group">
+              <label>Carrera</label>
+              <select [(ngModel)]="curCarrera">
+                <option value="">Seleccione...</option>
+                @for (car of carreras(); track car.id) {
+                  <option [value]="car.id">{{ car.nombre }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
             <div class="form-group">
               <label>Cupos</label>
               <input type="number" [(ngModel)]="curCupos" min="1" value="30" />
@@ -351,6 +421,7 @@
                 <th>Créditos</th>
                 <th>Prerrequisito</th>
                 <th>Docente</th>
+                <th>Carrera</th>
                 <th>Cupos</th>
                 <th></th>
               </tr>
@@ -365,6 +436,7 @@
                   <td>{{ c.creditos }}</td>
                   <td>{{ c.prereq || '—' }}</td>
                   <td>{{ c.nombreDocente || '—' }}</td>
+                  <td>{{ c.nombreCarrera || '—' }}</td>
                   <td>{{ c.cupos }}</td>
                   <td>
                     <button class="btn btn-sm btn-danger" (click)="eliminarCurso(c)">
@@ -512,9 +584,19 @@
     @if (currentPage() === 'horarios') {
       <div class="page active">
         <h2>Horarios</h2>
+
         <div class="card">
-          <h3><i class="fas fa-magic"></i> Generación automática de horarios</h3>
+          <h3><i class="fas fa-magic"></i> Generación automática de horarios por Carrera</h3>
           <div class="form-row schedule">
+            <div class="form-group">
+              <label>Carrera</label>
+              <select [(ngModel)]="horCarrera">
+                <option value="">Todas las Carreras</option>
+                @for (car of carreras(); track car.id) {
+                  <option [value]="car.id">{{ car.nombre }}</option>
+                }
+              </select>
+            </div>
             <div class="form-group">
               <label>Hora inicio</label>
               <select [(ngModel)]="horInicio">

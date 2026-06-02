@@ -15,9 +15,10 @@ class CursoService:
         prerequisito_id: Optional[int],
         docente_id: int,
         cupos: int,
+        carrera_id: Optional[int] = None,
     ) -> Dict[str, Any]:
         result = CursoRepository.create(
-            codigo, nombre, creditos_req, prerequisito_id, docente_id, cupos
+            codigo, nombre, creditos_req, prerequisito_id, docente_id, cupos, carrera_id
         )
         if result.get("Exito"):
             return {

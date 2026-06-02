@@ -20,6 +20,7 @@ def create_curso(curso: CursoCreate):
         curso.prerequisitoID,
         curso.docenteID,
         curso.cupos,
+        curso.carreraID,
     )
     if not result["success"]:
         raise HTTPException(status_code=400, detail=result["message"])

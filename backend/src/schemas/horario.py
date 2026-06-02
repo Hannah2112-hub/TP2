@@ -18,6 +18,7 @@ class HorarioResponse(HorarioBase):
     id: int
     nombreCurso: Optional[str] = None
     nombreAula: Optional[str] = None
+    carreraid: Optional[int] = None
 
     class Config:
         from_attributes = True

@@ -8,6 +8,7 @@ import {
   Aula,
   Matricula,
   AsignacionHorario,
+  Carrera,
 } from '../models/modelos';
 
 const API = 'http://127.0.0.1:8000/api';
@@ -23,6 +24,7 @@ interface ApiResponse<T = any> {
 })
 export class AcademicService {
   // ── Signals reactivos (fuente de verdad para la UI) ──────────────────────
+  private carreras      = signal<Carrera[]>([]);
   private estudiantes = signal<Estudiante[]>([]);
   private docentes    = signal<Docente[]>([]);
   private cursos      = signal<Curso[]>([]);
@@ -39,6 +41,7 @@ export class AcademicService {
   }
 
   // ── Getters readonly ──────────────────────────────────────────────────────
+  get Carreras()        { return this.carreras.asReadonly(); }
   get Estudiantes()     { return this.estudiantes.asReadonly(); }
   get Docentes()        { return this.docentes.asReadonly(); }
   get Cursos()          { return this.cursos.asReadonly(); }
@@ -49,6 +52,7 @@ export class AcademicService {
   // ── Carga inicial ─────────────────────────────────────────────────────────
   async cargarTodo() {
     await Promise.all([
+      this.cargarCarreras(),
       this.cargarEstudiantes(),
       this.cargarDocentes(),
       this.cargarCursos(),
@@ -160,8 +164,10 @@ export class AcademicService {
           creditos: c.creditosreq ?? 0,
           prereq:   c.prerequisitoid ? String(c.prerequisitoid) : '',
           docente:  c.docenteid ? String(c.docenteid) : '',
+          carrera:  c.carreraid ? String(c.carreraid) : '',
           cupos:    c.cupos ?? 30,
           nombreDocente: c.nombredocente ?? '',
+          nombreCarrera: c.nombrecarrera ?? '',
         })));
       }
     } catch (e) { console.error('Error cargando cursos:', e); }
@@ -176,6 +182,7 @@ export class AcademicService {
           creditosReq:   curso.creditos,
           prerequisitoID: curso.prereq ? Number(curso.prereq) : null,
           docenteID:     curso.docente ? Number(curso.docente) : null,
+          carreraID:     curso.carrera ? Number(curso.carrera) : null,
           cupos:         curso.cupos,
         })
       );
@@ -286,19 +293,21 @@ export class AcademicService {
           horaFin:    parseInt(h.horafin?.split(':')[0] ?? '10', 10),
           aula:       h.nombreaula ?? `Aula ${h.aulaid}`,
           color:      this.colores[i % this.colores.length],
+          carreraId:  h.carreraid,
         })));
       }
     } catch (e) { console.error('Error cargando horarios:', e); }
   }
 
-  async generarHorarios(inicio: number, bloque: number): Promise<{ ok: boolean; mensaje: string }> {
+  async generarHorarios(inicio: number, bloque: number, carreraId?: number): Promise<{ ok: boolean; mensaje: string }> {
     const horaStr = `${String(inicio).padStart(2, '0')}:00`;
+    let url = `${API}/horarios/generar?hora_inicio=${horaStr}&bloques_horas=${bloque}`;
+    if (carreraId) {
+      url += `&carrera_id=${carreraId}`;
+    }
     try {
       const res = await firstValueFrom(
-        this.http.post<ApiResponse>(
-          `${API}/horarios/generar?hora_inicio=${horaStr}&bloques_horas=${bloque}`,
-          {}
-        )
+        this.http.post<ApiResponse>(url, {})
       );
       await this.cargarHorarios();
       return { ok: res.success, mensaje: res.message ?? 'Horarios generados' };
@@ -306,6 +315,61 @@ export class AcademicService {
       const msg = err?.error?.detail ?? 'Error al generar horarios';
       return { ok: false, mensaje: msg };
     }
+  }
+
+  async agregarHorario(cursoId: number, aulaId: number, dia: number, horaInicio: string, horaFin: string): Promise<{ ok: boolean; mensaje: string }> {
+    try {
+      const res = await firstValueFrom(
+        this.http.post<ApiResponse>(`${API}/horarios`, {
+          cursoID: cursoId,
+          aulaID: aulaId,
+          diaSemana: dia,
+          horaInicio: horaInicio,
+          horaFin: horaFin
+        })
+      );
+      await this.cargarHorarios();
+      return { ok: res.success, mensaje: res.message ?? 'Horario registrado' };
+    } catch (err: any) {
+      const msg = err?.error?.detail ?? (err?.error?.message ?? 'Error registrando horario');
+      return { ok: false, mensaje: msg };
+    }
+  }
+
+  // ── CARRERAS ──────────────────────────────────────────────────────────────
+  async cargarCarreras() {
+    try {
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<any[]>>(`${API}/carreras`)
+      );
+      if (res.success && res.data) {
+        this.carreras.set(res.data.map((c: any) => ({
+          id:       c.carreraid,
+          nombre:   c.nombre,
+          facultad: c.facultad,
+        })));
+      }
+    } catch (e) { console.error('Error cargando carreras:', e); }
+  }
+
+  async agregarCarrera(car: Carrera): Promise<boolean> {
+    try {
+      const res = await firstValueFrom(
+        this.http.post<ApiResponse>(`${API}/carreras`, {
+          nombre:   car.nombre,
+          facultad: car.facultad,
+        })
+      );
+      if (res.success) { await this.cargarCarreras(); return true; }
+      return false;
+    } catch (e) { console.error('Error registrando carrera:', e); return false; }
+  }
+
+  async eliminarCarrera(id: number) {
+    try {
+      await firstValueFrom(this.http.delete(`${API}/carreras/${id}`));
+      await this.cargarCarreras();
+    } catch (e) { console.error('Error eliminando carrera:', e); }
   }
 
   // ── DASHBOARD ─────────────────────────────────────────────────────────────
