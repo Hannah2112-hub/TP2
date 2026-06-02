@@ -10,7 +10,6 @@
 - [Instrucciones de instalación](#instrucciones-de-instalación)
 - [Instrucciones de build](#instrucciones-de-build)
 - [Instrucciones de despliegue](#instrucciones-de-despliegue)
-- [Video explicativo](#video-explicativo)
 - [Documentación](#documentación)
 
 ---
@@ -105,15 +104,9 @@ npm run build
 ## Instrucciones de despliegue
 
 1. Configurar la base de datos en SQL Server.
-2. Actualizar variables de entorno (credenciales, puertos, etc.).
-3. Ejecutar el backend en un servidor (ej: Uvicorn o Docker).
-4. Desplegar el frontend en un servidor web (ej: Nginx).
-
----
-
-## Video explicativo
-
-👉 *(Agregar enlace al video – máximo 5 minutos)*
+2. Actualizar variables de entorno 
+3. Ejecutar el backend en un servidor 
+4. Desplegar el frontend en un servidor web 
 
 ---
 
