@@ -68,7 +68,7 @@
           <span class="user-type-label">{{ auth.currentUserType() }}</span>
         </div>
       </div>
-      <button class="logout-btn" (click)="logout()">
+      <button class="logout-btn" (click)="logout()" data-cy="btn-logout">
         <i class="fas fa-sign-out-alt"></i>
       </button>
     </div>
@@ -88,7 +88,7 @@
 
     <!-- DASHBOARD -->
     @if (currentPage() === 'dashboard') {
-      <div class="page active">
+      <div class="page active" data-cy="dashboard-content">
         <h2>Panel principal</h2>
         <div class="cards">
           <div class="metric">

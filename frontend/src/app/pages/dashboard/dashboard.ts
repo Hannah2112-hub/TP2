@@ -297,10 +297,11 @@ export class DashboardComponent implements OnInit {
       return;
     }
     this.cargando.set(true);
+    const carreraId = this.horCarrera() ? Number(this.horCarrera()) : undefined;
     const { ok, mensaje } = await this.academicService.generarHorarios(
       Number(this.horInicio()),
       Number(this.horBloque()),
-      this.horCarrera() ? Number(this.horCarrera()) : undefined
+      carreraId
     );
     this.cargando.set(false);
     this.showMsg(mensaje, ok ? 'success' : 'error');

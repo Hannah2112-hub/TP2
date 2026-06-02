@@ -1,0 +1,510 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 17,
+    "passes": 8,
+    "pending": 0,
+    "failures": 9,
+    "start": "2026-06-02T06:07:41.449Z",
+    "end": "2026-06-02T06:09:14.538Z",
+    "duration": 93089,
+    "testsRegistered": 17,
+    "passPercent": 47.05882352941176,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5d8cf1be-2938-4df4-bfb4-1e4c8f0c5cc9",
+      "title": "",
+      "fullFile": "cypress\\e2e\\sistema_academico.cy.js",
+      "file": "cypress\\e2e\\sistema_academico.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+          "title": "Autenticación - Login/Logout",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "GP-001 | Golden Path: Admin inicia sesión y accede al dashboard",
+              "fullTitle": "Autenticación - Login/Logout GP-001 | Golden Path: Admin inicia sesión y accede al dashboard",
+              "timedOut": null,
+              "duration": 3151,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=\"email-input\"]').type('admin@uni.edu');\ncy.get('[data-cy=\"password-input\"]').type('admin123');\ncy.get('[data-cy=\"btn-login\"]').click();\ncy.url().should('include', '/dashboard');\ncy.get('[data-cy=\"dashboard-content\"]').should('be.visible');",
+              "err": {},
+              "uuid": "eb14728f-c501-468e-83af-33826c958722",
+              "parentUUID": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "HP-001 | Happy Path: Logout redirige a login",
+              "fullTitle": "Autenticación - Login/Logout HP-001 | Happy Path: Logout redirige a login",
+              "timedOut": null,
+              "duration": 1327,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=\"email-input\"]').type('admin@uni.edu');\ncy.get('[data-cy=\"password-input\"]').type('admin123');\ncy.get('[data-cy=\"btn-login\"]').click();\ncy.url().should('include', '/dashboard');\ncy.get('[data-cy=\"btn-logout\"]').click();\ncy.url().should('include', '/login');",
+              "err": {},
+              "uuid": "03b0d926-881a-4cf4-916d-8da878012839",
+              "parentUUID": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "HP-002 | Happy Path: Sesión persiste tras recargar dashboard",
+              "fullTitle": "Autenticación - Login/Logout HP-002 | Happy Path: Sesión persiste tras recargar dashboard",
+              "timedOut": null,
+              "duration": 11421,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=\"email-input\"]').type('admin@uni.edu');\ncy.get('[data-cy=\"password-input\"]').type('admin123');\ncy.get('[data-cy=\"btn-login\"]').click();\ncy.url().should('include', '/dashboard');\ncy.reload();\ncy.url().should('include', '/dashboard');\ncy.get('[data-cy=\"dashboard-content\"]').should('be.visible');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'",
+                "estack": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:31:13)",
+                "diff": null
+              },
+              "uuid": "9ed83649-b422-4da4-ad4c-c500a9ef5bdc",
+              "parentUUID": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "UP-001 | Unhappy Path: Login con servidor caído no rompe la app",
+              "fullTitle": "Autenticación - Login/Logout UP-001 | Unhappy Path: Login con servidor caído no rompe la app",
+              "timedOut": null,
+              "duration": 1583,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('POST', '**/api/**', {\n  forceNetworkError: true\n});\ncy.get('[data-cy=\"email-input\"]').type('admin@uni.edu');\ncy.get('[data-cy=\"password-input\"]').type('admin123');\ncy.get('[data-cy=\"btn-login\"]').click();\ncy.url().should('include', '/dashboard');",
+              "err": {},
+              "uuid": "dbbf3f8c-d689-417c-993c-f9c488919505",
+              "parentUUID": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "UP-002 | Unhappy Path: Ruta protegida sin autenticar redirige a login",
+              "fullTitle": "Autenticación - Login/Logout UP-002 | Unhappy Path: Ruta protegida sin autenticar redirige a login",
+              "timedOut": null,
+              "duration": 1058,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/dashboard');\ncy.url().should('include', '/login');",
+              "err": {},
+              "uuid": "81686ee4-a870-4ce4-ad98-14d00dd8e79a",
+              "parentUUID": "f968a30a-9f88-427a-8fd2-f639f11e777b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "eb14728f-c501-468e-83af-33826c958722",
+            "03b0d926-881a-4cf4-916d-8da878012839",
+            "dbbf3f8c-d689-417c-993c-f9c488919505",
+            "81686ee4-a870-4ce4-ad98-14d00dd8e79a"
+          ],
+          "failures": [
+            "9ed83649-b422-4da4-ad4c-c500a9ef5bdc"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 18540,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+          "title": "Navegación Funcional",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "NAV-001 | Dashboard carga correctamente con secciones visibles",
+              "fullTitle": "Navegación Funcional NAV-001 | Dashboard carga correctamente con secciones visibles",
+              "timedOut": null,
+              "duration": 10860,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-cy=\"dashboard-content\"]').should('be.visible');\ncy.get('h2').should('contain', 'Panel principal');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[data-cy=\"dashboard-content\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[data-cy=\"dashboard-content\"]`, but never found it.\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:62:44)",
+                "diff": null
+              },
+              "uuid": "52ca0a1b-6efb-462d-9a59-8f1c86b7fc54",
+              "parentUUID": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "NAV-002 | Título de la página no está vacío",
+              "fullTitle": "Navegación Funcional NAV-002 | Título de la página no está vacío",
+              "timedOut": null,
+              "duration": 821,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.title().should('not.be.empty');",
+              "err": {},
+              "uuid": "6646f16b-7962-4bf5-b197-0c7d6ba8e1e9",
+              "parentUUID": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "NAV-003 | Navegación a sección estudiantes funciona",
+              "fullTitle": "Navegación Funcional NAV-003 | Navegación a sección estudiantes funciona",
+              "timedOut": null,
+              "duration": 10390,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('.nav-item', 'Estudiantes').click();\ncy.get('h2').should('contain', 'Estudiantes');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find content: 'Estudiantes' within the selector: '.nav-item' but never did.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find content: 'Estudiantes' within the selector: '.nav-item' but never did.\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:71:7)",
+                "diff": null
+              },
+              "uuid": "6afb69e0-27af-41a2-a5a6-5bfa1c1fd9b4",
+              "parentUUID": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "NAV-004 | Navegación a sección horarios funciona",
+              "fullTitle": "Navegación Funcional NAV-004 | Navegación a sección horarios funciona",
+              "timedOut": null,
+              "duration": 10821,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('.nav-item', 'Horarios').click();\ncy.get('h2').should('contain', 'Horarios');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find content: 'Horarios' within the selector: '.nav-item' but never did.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find content: 'Horarios' within the selector: '.nav-item' but never did.\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:76:7)",
+                "diff": null
+              },
+              "uuid": "6b51d352-1726-4065-8230-5525aa8abbc0",
+              "parentUUID": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "NAV-005 | Ruta inexistente redirige o muestra página",
+              "fullTitle": "Navegación Funcional NAV-005 | Ruta inexistente redirige o muestra página",
+              "timedOut": null,
+              "duration": 790,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/ruta-inexistente', {\n  failOnStatusCode: false\n});\ncy.url().should('not.be.empty');",
+              "err": {},
+              "uuid": "d18b7bc0-416c-47a7-a55e-d5f2ed9a1fc5",
+              "parentUUID": "20d79f5d-e527-4eeb-bb98-0cff2947714f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6646f16b-7962-4bf5-b197-0c7d6ba8e1e9",
+            "d18b7bc0-416c-47a7-a55e-d5f2ed9a1fc5"
+          ],
+          "failures": [
+            "52ca0a1b-6efb-462d-9a59-8f1c86b7fc54",
+            "6afb69e0-27af-41a2-a5a6-5bfa1c1fd9b4",
+            "6b51d352-1726-4065-8230-5525aa8abbc0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 33682,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "c1efc3ed-1ddf-4ffc-8e78-c5f85ba5a0f3",
+          "title": "Autenticación API",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "SEC-001 | Health check del backend",
+              "fullTitle": "Autenticación API SEC-001 | Health check del backend",
+              "timedOut": null,
+              "duration": 1711,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: `${API}/health`,\n  failOnStatusCode: false\n}).then(resp => {\n  if (resp.status === 200) {\n    expect(resp.body.status).to.equal('healthy');\n  }\n});",
+              "err": {},
+              "uuid": "5d375076-9aa4-4bf9-b445-9c294b3b9682",
+              "parentUUID": "c1efc3ed-1ddf-4ffc-8e78-c5f85ba5a0f3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "SEC-002 | POST /auth/login con credenciales admin devuelve 200",
+              "fullTitle": "Autenticación API SEC-002 | POST /auth/login con credenciales admin devuelve 200",
+              "timedOut": null,
+              "duration": 1585,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${API}/auth/login`,\n  body: {\n    email: 'admin@uni.edu',\n    password: 'admin123',\n    tipo: 'admin'\n  },\n  failOnStatusCode: false\n}).then(resp => {\n  if (resp.status === 200) {\n    expect(resp.body.success).to.be.true;\n    expect(resp.body.data.tipo).to.equal('admin');\n  }\n});",
+              "err": {},
+              "uuid": "feface55-3d11-4bb9-ae24-63082f4c1ed5",
+              "parentUUID": "c1efc3ed-1ddf-4ffc-8e78-c5f85ba5a0f3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "SEC-003 | POST /auth/login credenciales incorrectas devuelve 401",
+              "fullTitle": "Autenticación API SEC-003 | POST /auth/login credenciales incorrectas devuelve 401",
+              "timedOut": null,
+              "duration": 1838,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${API}/auth/login`,\n  body: {\n    email: 'admin@uni.edu',\n    password: 'WRONG',\n    tipo: 'admin'\n  },\n  failOnStatusCode: false\n}).then(resp => {\n  if (resp.status !== 503) {\n    expect(resp.status).to.equal(401);\n  }\n});",
+              "err": {
+                "message": "AssertionError: expected 404 to equal 401",
+                "estack": "AssertionError: expected 404 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:118:31)\n    at getRet (http://localhost:4200/__cypress/runner/cypress_runner.js:122946:20)\n    at tryCatcher (http://localhost:4200/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (http://localhost:4200/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (http://localhost:4200/__cypress/runner/cypress_runner.js:122957:66)\n    at Context.then (http://localhost:4200/__cypress/runner/cypress_runner.js:123208:21)",
+                "diff": "- 404\n+ 401\n"
+              },
+              "uuid": "ea883363-a1d5-418c-824a-adebab74ee7b",
+              "parentUUID": "c1efc3ed-1ddf-4ffc-8e78-c5f85ba5a0f3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "SEC-004 | POST /auth/login tipo inválido devuelve 400",
+              "fullTitle": "Autenticación API SEC-004 | POST /auth/login tipo inválido devuelve 400",
+              "timedOut": null,
+              "duration": 1787,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${API}/auth/login`,\n  body: {\n    email: 'test@test.com',\n    password: 'pass',\n    tipo: 'hacker'\n  },\n  failOnStatusCode: false\n}).then(resp => {\n  if (resp.status !== 503) {\n    expect(resp.status).to.equal(400);\n  }\n});",
+              "err": {
+                "message": "AssertionError: expected 404 to equal 400",
+                "estack": "AssertionError: expected 404 to equal 400\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:130:31)\n    at getRet (http://localhost:4200/__cypress/runner/cypress_runner.js:122946:20)\n    at tryCatcher (http://localhost:4200/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (http://localhost:4200/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (http://localhost:4200/__cypress/runner/cypress_runner.js:122957:66)\n    at Context.then (http://localhost:4200/__cypress/runner/cypress_runner.js:123208:21)",
+                "diff": "- 404\n+ 400\n"
+              },
+              "uuid": "bbd05a97-aa54-48f2-a394-d410d9f0dfe5",
+              "parentUUID": "c1efc3ed-1ddf-4ffc-8e78-c5f85ba5a0f3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5d375076-9aa4-4bf9-b445-9c294b3b9682",
+            "feface55-3d11-4bb9-ae24-63082f4c1ed5"
+          ],
+          "failures": [
+            "ea883363-a1d5-418c-824a-adebab74ee7b",
+            "bbd05a97-aa54-48f2-a394-d410d9f0dfe5"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 6921,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "06bbb17b-534e-467b-abae-b9a08c5e05cc",
+          "title": "Persistencia de Información",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "PERSIST-001 | Sesión persiste tras recargar la página",
+              "fullTitle": "Persistencia de Información PERSIST-001 | Sesión persiste tras recargar la página",
+              "timedOut": null,
+              "duration": 10903,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.clearLocalStorage();\ncy.window().then(win => {\n  win.localStorage.setItem('auth', JSON.stringify({\n    loggedIn: true,\n    userType: 'admin',\n    userName: 'Administrador'\n  }));\n});\ncy.visit('/dashboard');\ncy.url().should('include', '/dashboard');\ncy.reload();\ncy.url().should('include', '/dashboard');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'",
+                "estack": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:146:13)",
+                "diff": null
+              },
+              "uuid": "3219d5e9-521d-4194-8a5f-bd39eed0d522",
+              "parentUUID": "06bbb17b-534e-467b-abae-b9a08c5e05cc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "PERSIST-002 | Logout limpia localStorage",
+              "fullTitle": "Persistencia de Información PERSIST-002 | Logout limpia localStorage",
+              "timedOut": null,
+              "duration": 10745,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.clearLocalStorage();\ncy.window().then(win => {\n  win.localStorage.setItem('auth', JSON.stringify({\n    loggedIn: true,\n    userType: 'admin',\n    userName: 'Administrador'\n  }));\n});\ncy.visit('/dashboard');\ncy.get('[data-cy=\"btn-logout\"]').click({\n  force: true\n});\ncy.window().then(win => {\n  expect(win.localStorage.getItem('auth')).to.be.null;\n});",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[data-cy=\"btn-logout\"]`, but never found it.",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `[data-cy=\"btn-logout\"]`, but never found it.\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:159:7)",
+                "diff": null
+              },
+              "uuid": "f53f32f6-7919-482b-8b84-ce6c603f1815",
+              "parentUUID": "06bbb17b-534e-467b-abae-b9a08c5e05cc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "PERSIST-003 | Tipo de usuario persiste correctamente",
+              "fullTitle": "Persistencia de Información PERSIST-003 | Tipo de usuario persiste correctamente",
+              "timedOut": null,
+              "duration": 11302,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.window().then(win => {\n  win.localStorage.setItem('auth', JSON.stringify({\n    loggedIn: true,\n    userType: 'docente',\n    userName: 'Docente'\n  }));\n});\ncy.visit('/dashboard');\ncy.url().should('include', '/dashboard');\ncy.get('.user-type-label').should('contain', 'docente');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'",
+                "estack": "AssertionError: Timed out retrying after 10000ms: expected 'http://localhost:4200/login' to include '/dashboard'\n    at Context.eval (webpack://frontend/./cypress/e2e/sistema_academico.cy.js:172:13)",
+                "diff": null
+              },
+              "uuid": "cc24d6b2-5106-4f32-a887-4309c1e21987",
+              "parentUUID": "06bbb17b-534e-467b-abae-b9a08c5e05cc",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "3219d5e9-521d-4194-8a5f-bd39eed0d522",
+            "f53f32f6-7919-482b-8b84-ce6c603f1815",
+            "cc24d6b2-5106-4f32-a887-4309c1e21987"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 32950,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "cypress-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "reportFilename": "cypress-report",
+        "timestamp": "mmddyyyy_HHMMss"
+      },
+      "version": "6.3.2"
+    }
+  }
+}

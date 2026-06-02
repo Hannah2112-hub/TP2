@@ -6,6 +6,7 @@ from .curso_api import router as curso_router
 from .matricula_api import router as matricula_router
 from .horario_api import router as horario_router
 from .carrera_api import router as carrera_router
+from .auth_api import router as auth_router
 
 router = APIRouter()
 
@@ -16,4 +17,5 @@ router.include_router(curso_router)
 router.include_router(matricula_router)
 router.include_router(horario_router)
 router.include_router(carrera_router)
+router.include_router(auth_router)
 

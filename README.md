@@ -111,6 +111,65 @@ npm run build
 
 ---
 
+## Instrucciones de Testing
+
+### Frontend (Vitest + MSW + Cypress)
+
+**Ejecutar tests unitarios y de integración:**
+```bash
+cd frontend
+npx vitest run
+```
+
+**Ver cobertura de código:**
+```bash
+npx vitest run --coverage
+```
+El reporte se genera en `frontend/coverage/index.html`.
+
+**Ejecutar tests E2E (Cypress):**
+```bash
+cd frontend
+npx cypress run
+```
+Los reportes se generan en `frontend/cypress/reports/`.
+
+**Ejecutar tests en modo headed (interactivo):**
+```bash
+npx cypress open
+```
+
+### Backend (pytest)
+
+**Ejecutar todos los tests:**
+```bash
+cd backend
+python -m pytest tests/ -v
+```
+
+**Ejecutar con cobertura:**
+```bash
+python -m pytest tests/ --cov=src --cov-report=html
+```
+El reporte se genera en `backend/htmlcov/index.html`.
+
+**Ejecutar solo tests unitarios (sin E2E):**
+```bash
+python -m pytest tests/ -v -m "not e2e"
+```
+
+### Herramientas de Testing Utilizadas
+
+| Tipo | Frontend | Backend |
+|------|----------|---------|
+| Unitarias | Vitest | pytest |
+| Integración API | MSW (Mock Service Worker) | FastAPI TestClient (httpx) |
+| Componentes | Vitest + mocks directos | - |
+| Aceptación/E2E | Cypress (15 tests) | pytest + SeleniumBase |
+| Cobertura | Vitest coverage (≥70%) | pytest-cov (≥70%) |
+
+---
+
 ## Video explicativo
 
 👉 *(Agregar enlace al video – máximo 5 minutos)*

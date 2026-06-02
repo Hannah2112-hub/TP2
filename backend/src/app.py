@@ -7,13 +7,26 @@ from src.apis.sustainability import router as sustainability_router
 from src.config.middleware import SustainabilityMiddleware
 from src.repositories.metrics_repository import MetricsRepository
 from src.repositories.carrera_repository import CarreraRepository
+from contextlib import asynccontextmanager
 
 load_dotenv()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        MetricsRepository.setup_table()
+        MetricsRepository.reset_metrics()
+        CarreraRepository.setup_table()
+        print("Metricas ambientales y tablas de dominio inicializadas correctamente.")
+    except Exception as e:
+        print(f"Error inicializando tablas: {e}")
+    yield
 
 app = FastAPI(
     title="Sistema de Gestión Académica",
     description="API REST para la gestión académica de la Universidad Continental",
     version="1.0.0",
+    lifespan=lifespan
 )
 
 # Compresión GZIP: Reduce significativamente el tamaño de transferencia y por ende, las emisiones de CO2
@@ -30,15 +43,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-def on_startup():
-    try:
-        MetricsRepository.setup_table()
-        MetricsRepository.reset_metrics()
-        CarreraRepository.setup_table()
-        print("Metricas ambientales y tablas de dominio inicializadas correctamente.")
-    except Exception as e:
-        print(f"Error inicializando tablas: {e}")
+
 
 # Rutas de Sostenibilidad (públicas)
 app.include_router(sustainability_router)

@@ -20,4 +20,29 @@ dependencies = [
 dev = [
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
+    "pytest-html>=4.0.0",
+    "httpx>=0.28.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+markers = [
+    "unit: Pruebas unitarias",
+    "integration: Pruebas de integración",
+    "e2e: Pruebas end-to-end",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["src/__pycache__/*", "tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 70
+
+[tool.coverage.html]
+directory = "htmlcov"

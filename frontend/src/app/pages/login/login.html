@@ -38,13 +38,13 @@
       <p class="subtitle">Ingresa tus credenciales para acceder al sistema</p>
 
       @if (showError()) {
-        <div class="error-message">
+        <div class="error-message" data-cy="login-error">
           <i class="fas fa-exclamation-circle"></i>
           <span>{{ errorMessage() }}</span>
         </div>
       }
 
-      <form (ngSubmit)="login()">
+      <form (ngSubmit)="login()" data-cy="login-form">
         <div class="form-group">
           <label>Correo electrónico</label>
           <div class="input-wrapper">
@@ -54,6 +54,7 @@
               name="email"
               placeholder="correo@uni.edu"
               required
+              data-cy="email-input"
             />
             <i class="fas fa-envelope"></i>
           </div>
@@ -68,6 +69,7 @@
               name="password"
               placeholder="••••••••"
               required
+              data-cy="password-input"
             />
             <i class="fas fa-lock"></i>
           </div>
@@ -81,7 +83,7 @@
           <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
         </div>
 
-        <button type="submit" class="login-btn">
+        <button type="submit" class="login-btn" data-cy="btn-login">
           <i class="fas fa-sign-in-alt"></i> Ingresar al Sistema
         </button>
       </form>
