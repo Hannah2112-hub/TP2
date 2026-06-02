@@ -10,7 +10,6 @@
 - [Instrucciones de instalación](#instrucciones-de-instalación)
 - [Instrucciones de build](#instrucciones-de-build)
 - [Instrucciones de despliegue](#instrucciones-de-despliegue)
-- [Video explicativo](#video-explicativo)
 - [Documentación](#documentación)
 
 ---
@@ -173,9 +172,3 @@ python -m pytest tests/ -v -m "not e2e"
 ## Video explicativo
 
 👉 *(Agregar enlace al video – máximo 5 minutos)*
-
----
-
-## Documentación
-
-👉 Revisar la carpeta [`docs/`](./docs) dentro del repositorio para más detalles técnicos y funcionales.
