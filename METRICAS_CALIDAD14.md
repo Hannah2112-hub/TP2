@@ -310,7 +310,7 @@ npm run test:unit:coverage
 | Interpretación de métricas | ✅ |
 | Análisis OWASP Top 10 2025 | ✅ |
 | Validación WCAG | ✅ |
-| Evaluación SUS | ⏳ Pendiente de aplicación |
+| Evaluación SUS | ✅ |
 | Pruebas automatizadas | ✅ 430 pruebas |
 | Cobertura de pruebas | ✅ 97.1% |
 
