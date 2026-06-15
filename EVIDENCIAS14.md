@@ -10,7 +10,7 @@
 
 ## 1. Evidencia: Métricas Generales - Estado Antes
 
-![Métricas generales antes](evidencias/metricageneral_antes)
+![Métricas generales antes](evidencias/metricageneral_antes.jpg)
 
 **Descripción:**
 Captura del dashboard de SonarQube mostrando las métricas generales del proyecto antes de implementar las correcciones. Se observan los indicadores de calidad que necesitaban atención.
@@ -30,7 +30,7 @@ Captura del dashboard de SonarQube mostrando las métricas generales del proyect
 
 ## 2. Evidencia: Errores Detectados
 
-![Errores detectados](evidencias/errores)
+![Errores detectados](evidencias/errores.jpg)
 
 **Descripción:**
 Captura de los errores y problemas de código detectados por SonarQube durante el análisis estático. Se identificaron un total de **99 issues** de código que incluían:
@@ -57,7 +57,7 @@ Captura de los errores y problemas de código detectados por SonarQube durante e
 
 ## 3. Evidencia: Evidencia de Corrección (Quality Gate PASSED)
 
-![Quality Gate Passed](evidencias/evidenciapassed)
+![Quality Gate Passed](evidencias/evidenciapassed.jpg)
 
 **Descripción:**
 Captura del estado del Quality Gate después de implementar todas las correcciones. Se observa el estado **OK** confirmando que el proyecto cumple con todos los criterios de calidad.
@@ -76,7 +76,7 @@ Captura del estado del Quality Gate después de implementar todas las correccion
 
 ## 4. Evidencia: Security Hotspot Revisado
 
-![Security Hotspot](evidencias/hostpost)
+![Security Hotspot](evidencias/hostpost.jpg)
 
 **Descripción:**
 Captura del Security Hotspot detectado por SonarQube relacionado con el uso de `random.randint()` en el archivo `horario_repository.py`.
@@ -104,7 +104,7 @@ Se revisó el hotspot y se marcó como **SAFE** (seguro) con la justificación:
 
 ## 5. Evidencia: Cobertura de Código Actual
 
-![Cobertura actual](evidencias/coberturaactual)
+![Cobertura actual](evidencias/coberturaactual.jpg)
 
 **Descripción:**
 Captura de la cobertura de código alcanzada después de escribir las pruebas automatizadas y configurar los reportes de cobertura.
