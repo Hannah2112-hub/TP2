@@ -11,6 +11,7 @@
         class="nav-item"
         [class.active]="currentPage() === 'dashboard'"
         (click)="navigate('dashboard')"
+        (keydown.enter)="navigate('dashboard')"
       >
         <i class="fas fa-chart-pie"></i> Panel principal
       </div>
@@ -18,6 +19,7 @@
         class="nav-item"
         [class.active]="currentPage() === 'carreras'"
         (click)="navigate('carreras')"
+        (keydown.enter)="navigate('carreras')"
       >
         <i class="fas fa-university"></i> Carreras
       </div>
@@ -25,6 +27,7 @@
         class="nav-item"
         [class.active]="currentPage() === 'estudiantes'"
         (click)="navigate('estudiantes')"
+        (keydown.enter)="navigate('estudiantes')"
       >
         <i class="fas fa-user-graduate"></i> Estudiantes
       </div>
@@ -32,6 +35,7 @@
         class="nav-item"
         [class.active]="currentPage() === 'docentes'"
         (click)="navigate('docentes')"
+        (keydown.enter)="navigate('docentes')"
       >
         <i class="fas fa-chalkboard-teacher"></i> Docentes
       </div>
@@ -39,16 +43,18 @@
         class="nav-item"
         [class.active]="currentPage() === 'cursos'"
         (click)="navigate('cursos')"
+        (keydown.enter)="navigate('cursos')"
       >
         <i class="fas fa-book"></i> Cursos
       </div>
-      <div class="nav-item" [class.active]="currentPage() === 'aulas'" (click)="navigate('aulas')">
+      <div class="nav-item" [class.active]="currentPage() === 'aulas'" (click)="navigate('aulas')" (keydown.enter)="navigate('aulas')">
         <i class="fas fa-door-open"></i> Aulas
       </div>
       <div
         class="nav-item"
         [class.active]="currentPage() === 'matricula'"
         (click)="navigate('matricula')"
+        (keydown.enter)="navigate('matricula')"
       >
         <i class="fas fa-check-circle"></i> Matrícula
       </div>
@@ -56,6 +62,7 @@
         class="nav-item"
         [class.active]="currentPage() === 'horarios'"
         (click)="navigate('horarios')"
+        (keydown.enter)="navigate('horarios')"
       >
         <i class="fas fa-calendar-alt"></i> Horarios
       </div>
@@ -175,12 +182,12 @@
           <h3><i class="fas fa-university"></i> Registrar nueva carrera</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Nombre de la carrera</label>
-              <input [(ngModel)]="carNombre" placeholder="Ej. Ingeniería de Sistemas" />
+              <label for="car-nombre">Nombre de la carrera</label>
+              <input id="car-nombre" [(ngModel)]="carNombre" placeholder="Ej. Ingeniería de Sistemas" />
             </div>
             <div class="form-group">
-              <label>Facultad</label>
-              <input [(ngModel)]="carFacultad" placeholder="Ej. Ingeniería" />
+              <label for="car-facultad">Facultad</label>
+              <input id="car-facultad" [(ngModel)]="carFacultad" placeholder="Ej. Ingeniería" />
             </div>
           </div>
           <div class="actions">
@@ -226,22 +233,22 @@
           <h3><i class="fas fa-user-plus"></i> Registrar nuevo estudiante</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Nombre completo</label>
-              <input [(ngModel)]="estNombre" placeholder="Ej. Ana García" />
+              <label for="est-nombre">Nombre completo</label>
+              <input id="est-nombre" [(ngModel)]="estNombre" placeholder="Ej. Ana García" />
             </div>
             <div class="form-group">
-              <label>Código</label>
-              <input [(ngModel)]="estCodigo" placeholder="Ej. EST-001" />
+              <label for="est-codigo">Código</label>
+              <input id="est-codigo" [(ngModel)]="estCodigo" placeholder="Ej. EST-001" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Créditos acumulados</label>
-              <input type="number" [(ngModel)]="estCreditos" min="0" value="0" />
+              <label for="est-creditos">Créditos acumulados</label>
+              <input id="est-creditos" type="number" [(ngModel)]="estCreditos" min="0" value="0" />
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input [(ngModel)]="estCorreo" placeholder="correo@uni.edu" />
+              <label for="est-correo">Correo</label>
+              <input id="est-correo" [(ngModel)]="estCorreo" placeholder="correo@uni.edu" />
             </div>
           </div>
           <div class="actions">
@@ -293,22 +300,22 @@
           <h3><i class="fas fa-user-plus"></i> Registrar nuevo docente</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Nombre completo</label>
-              <input [(ngModel)]="docNombre" placeholder="Ej. Dr. Pérez" />
+              <label for="doc-nombre">Nombre completo</label>
+              <input id="doc-nombre" [(ngModel)]="docNombre" placeholder="Ej. Dr. Pérez" />
             </div>
             <div class="form-group">
-              <label>Código</label>
-              <input [(ngModel)]="docCodigo" placeholder="Ej. DOC-001" />
+              <label for="doc-codigo">Código</label>
+              <input id="doc-codigo" [(ngModel)]="docCodigo" placeholder="Ej. DOC-001" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Especialidad</label>
-              <input [(ngModel)]="docEsp" placeholder="Ej. Matemáticas" />
+              <label for="doc-especialidad">Especialidad</label>
+              <input id="doc-especialidad" [(ngModel)]="docEsp" placeholder="Ej. Matemáticas" />
             </div>
             <div class="form-group">
-              <label>Correo</label>
-              <input [(ngModel)]="docCorreo" placeholder="correo@uni.edu" />
+              <label for="doc-correo">Correo</label>
+              <input id="doc-correo" [(ngModel)]="docCorreo" placeholder="correo@uni.edu" />
             </div>
           </div>
           <div class="actions">
@@ -360,28 +367,28 @@
           <h3><i class="fas fa-book-medical"></i> Registrar nuevo curso</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Nombre del curso</label>
-              <input [(ngModel)]="curNombre" placeholder="Ej. Cálculo I" />
+              <label for="cur-nombre">Nombre del curso</label>
+              <input id="cur-nombre" [(ngModel)]="curNombre" placeholder="Ej. Cálculo I" />
             </div>
             <div class="form-group">
-              <label>Código</label>
-              <input [(ngModel)]="curCodigo" placeholder="Ej. MAT-101" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Créditos requeridos</label>
-              <input type="number" [(ngModel)]="curCreditos" min="0" value="0" />
-            </div>
-            <div class="form-group">
-              <label>Prerrequisito (código, opcional)</label>
-              <input [(ngModel)]="curPrereq" placeholder="Ej. MAT-100" />
+              <label for="cur-codigo">Código</label>
+              <input id="cur-codigo" [(ngModel)]="curCodigo" placeholder="Ej. MAT-101" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Docente</label>
-              <select [(ngModel)]="curDocente">
+              <label for="cur-creditos">Créditos requeridos</label>
+              <input id="cur-creditos" type="number" [(ngModel)]="curCreditos" min="0" value="0" />
+            </div>
+            <div class="form-group">
+              <label for="cur-prereq">Prerrequisito (código, opcional)</label>
+              <input id="cur-prereq" [(ngModel)]="curPrereq" placeholder="Ej. MAT-100" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cur-docente">Docente</label>
+              <select id="cur-docente" [(ngModel)]="curDocente">
                 <option value="">Seleccione...</option>
                 @for (d of docentes(); track d.codigo) {
                   <option [value]="d.id">{{ d.nombre }}</option>
@@ -389,8 +396,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Carrera</label>
-              <select [(ngModel)]="curCarrera">
+              <label for="cur-carrera">Carrera</label>
+              <select id="cur-carrera" [(ngModel)]="curCarrera">
                 <option value="">Seleccione...</option>
                 @for (car of carreras(); track car.id) {
                   <option [value]="car.id">{{ car.nombre }}</option>
@@ -400,8 +407,8 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Cupos</label>
-              <input type="number" [(ngModel)]="curCupos" min="1" value="30" />
+              <label for="cur-cupos">Cupos</label>
+              <input id="cur-cupos" type="number" [(ngModel)]="curCupos" min="1" value="30" />
             </div>
           </div>
           <div class="actions">
@@ -459,22 +466,22 @@
           <h3><i class="fas fa-door-open"></i> Registrar nueva aula</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Nombre/Número</label>
-              <input [(ngModel)]="aulaNombre" placeholder="Ej. Aula 101" />
+              <label for="aula-nombre">Nombre/Número</label>
+              <input id="aula-nombre" [(ngModel)]="aulaNombre" placeholder="Ej. Aula 101" />
             </div>
             <div class="form-group">
-              <label>Capacidad</label>
-              <input type="number" [(ngModel)]="aulaCap" min="1" value="40" />
+              <label for="aula-cap">Capacidad</label>
+              <input id="aula-cap" type="number" [(ngModel)]="aulaCap" min="1" value="40" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Edificio</label>
-              <input [(ngModel)]="aulaEdificio" placeholder="Ej. Pabellón A" />
+              <label for="aula-edificio">Edificio</label>
+              <input id="aula-edificio" [(ngModel)]="aulaEdificio" placeholder="Ej. Pabellón A" />
             </div>
             <div class="form-group">
-              <label>Equipamiento</label>
-              <input [(ngModel)]="aulaEquip" placeholder="Ej. Proyector, PC" />
+              <label for="aula-equip">Equipamiento</label>
+              <input id="aula-equip" [(ngModel)]="aulaEquip" placeholder="Ej. Proyector, PC" />
             </div>
           </div>
           <div class="actions">
@@ -524,16 +531,16 @@
           <h3><i class="fas fa-clipboard-check"></i> Registrar matrícula</h3>
           <div class="form-row">
             <div class="form-group">
-              <label>Estudiante</label>
-              <select [(ngModel)]="matEstudiante">
+              <label for="mat-estudiante">Estudiante</label>
+              <select id="mat-estudiante" [(ngModel)]="matEstudiante">
                 @for (e of estudiantes(); track e.codigo) {
                   <option [value]="e.id">{{ e.nombre }}</option>
                 }
               </select>
             </div>
             <div class="form-group">
-              <label>Curso</label>
-              <select [(ngModel)]="matCurso">
+              <label for="mat-curso">Curso</label>
+              <select id="mat-curso" [(ngModel)]="matCurso">
                 @for (c of cursos(); track c.codigo) {
                   <option [value]="c.id">{{ c.nombre }} (req. {{ c.creditos }} cr.)</option>
                 }
@@ -589,8 +596,8 @@
           <h3><i class="fas fa-magic"></i> Generación automática de horarios por Carrera</h3>
           <div class="form-row schedule">
             <div class="form-group">
-              <label>Carrera</label>
-              <select [(ngModel)]="horCarrera">
+              <label for="hor-carrera">Carrera</label>
+              <select id="hor-carrera" [(ngModel)]="horCarrera">
                 <option value="">Todas las Carreras</option>
                 @for (car of carreras(); track car.id) {
                   <option [value]="car.id">{{ car.nombre }}</option>
@@ -598,16 +605,16 @@
               </select>
             </div>
             <div class="form-group">
-              <label>Hora inicio</label>
-              <select [(ngModel)]="horInicio">
+              <label for="hor-inicio">Hora inicio</label>
+              <select id="hor-inicio" [(ngModel)]="horInicio">
                 <option [value]="7">07:00</option>
                 <option [value]="8">08:00</option>
                 <option [value]="9">09:00</option>
               </select>
             </div>
             <div class="form-group">
-              <label>Bloque por clase (hrs)</label>
-              <select [(ngModel)]="horBloque">
+              <label for="hor-bloque">Bloque por clase (hrs)</label>
+              <select id="hor-bloque" [(ngModel)]="horBloque">
                 <option [value]="1">1 hora</option>
                 <option [value]="2">2 horas</option>
                 <option [value]="3">3 horas</option>

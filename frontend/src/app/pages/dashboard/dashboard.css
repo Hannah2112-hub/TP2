@@ -40,12 +40,12 @@
 .sidebar-logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #4f46e5;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #ffffff;
   font-size: 18px;
 }
 
@@ -69,7 +69,7 @@
   padding: 12px 1rem;
   font-size: 13px;
   cursor: pointer;
-  color: #94a3b8;
+  color: #cbd5e1;
   border-radius: 0;
   transition: all 0.2s;
   display: flex;
@@ -89,8 +89,8 @@
 }
 
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(102, 126, 234, 0.2) 0%, transparent 100%);
-  color: #a5b4fc;
+  background: #1e2a4a;
+  color: #ffffff;
   border-left: 3px solid #667eea;
 }
 
@@ -117,7 +117,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #94a3b8;
+  color: #e2e8f0;
 }
 
 .user-details {
@@ -133,7 +133,7 @@
 
 .user-type-label {
   font-size: 11px;
-  color: #64748b;
+  color: #cbd5e1;
   text-transform: capitalize;
 }
 
@@ -143,7 +143,7 @@
   background: transparent;
   border: 1px solid #334155;
   border-radius: 8px;
-  color: #94a3b8;
+  color: #cbd5e1;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -151,7 +151,7 @@
 .logout-btn:hover {
   background: #ef4444;
   border-color: #ef4444;
-  color: white;
+  color: #000000;
 }
 
 .main {
@@ -187,21 +187,21 @@ h2 {
 }
 
 .alert-success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #0f2a1e;
+  color: #ffffff;
+  border: 1px solid #166534;
 }
 
 .alert-error {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #2d1518;
+  color: #ffffff;
+  border: 1px solid #991b1b;
 }
 
 .alert-info {
-  background: rgba(102, 126, 234, 0.15);
-  color: #a5b4fc;
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  background: #1a2240;
+  color: #ffffff;
+  border: 1px solid #3730a3;
 }
 
 .cards {
@@ -224,12 +224,12 @@ h2 {
 .metric-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #4f46e5;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #ffffff;
   font-size: 20px;
 }
 
@@ -251,7 +251,7 @@ h2 {
 
 .metric-label {
   font-size: 12px;
-  color: #64748b;
+  color: #cbd5e1;
   margin-bottom: 4px;
 }
 
@@ -309,7 +309,7 @@ h2 {
 
 .form-group label {
   font-size: 12px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-weight: 500;
 }
 
@@ -334,7 +334,7 @@ select:focus {
 }
 
 input::placeholder {
-  color: #64748b;
+  color: #cbd5e1;
 }
 
 select {
@@ -367,9 +367,9 @@ select option {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #4f46e5;
   border-color: transparent;
-  color: white;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
@@ -383,14 +383,14 @@ select option {
 }
 
 .btn-danger {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.3);
+  background: #2d1518;
+  color: #ffffff;
+  border: 1px solid #991b1b;
 }
 
 .btn-danger:hover {
-  background: #ef4444;
-  color: white;
+  background: #b91c1c;
+  color: #ffffff;
 }
 
 .actions {
@@ -410,7 +410,7 @@ th {
   padding: 12px;
   font-size: 12px;
   font-weight: 600;
-  color: #64748b;
+  color: #cbd5e1;
   border-bottom: 1px solid #334155;
 }
 
@@ -438,22 +438,22 @@ tr:hover td {
 }
 
 .badge-ok {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
+  background: #0f2a1e;
+  color: #ffffff;
 }
 
 .badge-err {
-  background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  background: #2d1518;
+  color: #ffffff;
 }
 
 .badge-info {
-  background: rgba(102, 126, 234, 0.15);
-  color: #a5b4fc;
+  background: #1a2240;
+  color: #ffffff;
 }
 
 .detail {
-  color: #64748b;
+  color: #cbd5e1;
   font-size: 12px;
 }
 
@@ -476,7 +476,7 @@ tr:hover td {
   padding: 10px 8px;
   text-align: center;
   font-weight: 600;
-  color: #94a3b8;
+  color: #cbd5e1;
   border-radius: 8px;
 }
 
@@ -484,7 +484,7 @@ tr:hover td {
   background: #334155;
   padding: 10px 8px;
   font-size: 11px;
-  color: #64748b;
+  color: #cbd5e1;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -505,33 +505,33 @@ tr:hover td {
 }
 
 .hc-purple {
-  background: rgba(167, 139, 250, 0.2);
-  color: #a78bfa;
+  background: #1e1a3a;
+  color: #ffffff;
 }
 
 .hc-teal {
-  background: rgba(45, 212, 191, 0.2);
-  color: #2dd4bf;
+  background: #0f2a28;
+  color: #ffffff;
 }
 
 .hc-blue {
-  background: rgba(96, 165, 250, 0.2);
-  color: #60a5fa;
+  background: #0f1a3a;
+  color: #ffffff;
 }
 
 .hc-amber {
-  background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  background: #2a2210;
+  color: #ffffff;
 }
 
 .hc-coral {
-  background: rgba(248, 113, 113, 0.2);
-  color: #f87171;
+  background: #2d1518;
+  color: #ffffff;
 }
 
 .hc-green {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
+  background: #0f2a1e;
+  color: #ffffff;
 }
 
 .hc-name {

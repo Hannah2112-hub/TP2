@@ -95,6 +95,12 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(service.Docentes()[0].codigo).toBe('D001');
       expect(service.Docentes()[0].especialidad).toBe('Matemáticas');
     });
+
+    it('ACAD-039 | Error en cargarDocentes no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarDocentes()).resolves.toBeUndefined();
+      expect(service.Docentes().length).toBe(0);
+    });
   });
 
   describe('cargarCursos', () => {
@@ -105,6 +111,12 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(service.Cursos()[0].codigo).toBe('C001');
       expect(service.Cursos()[0].cupos).toBe(30);
     });
+
+    it('ACAD-040 | Error en cargarCursos no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarCursos()).resolves.toBeUndefined();
+      expect(service.Cursos().length).toBe(0);
+    });
   });
 
   describe('cargarAulas', () => {
@@ -114,6 +126,12 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(service.Aulas().length).toBe(1);
       expect(service.Aulas()[0].nombre).toBe('A-101');
     });
+
+    it('ACAD-041 | Error en cargarAulas no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarAulas()).resolves.toBeUndefined();
+      expect(service.Aulas().length).toBe(0);
+    });
   });
 
   describe('cargarMatriculas', () => {
@@ -122,6 +140,12 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       await service.cargarMatriculas();
       expect(service.Matriculas().length).toBe(1);
       expect(service.Matriculas()[0].estado).toBe('Aprobada');
+    });
+
+    it('ACAD-042 | Error en cargarMatriculas no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarMatriculas()).resolves.toBeUndefined();
+      expect(service.Matriculas().length).toBe(0);
     });
   });
 
@@ -133,6 +157,12 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(service.HorarioGenerado()[0].curso).toBe('Álgebra');
       expect(service.HorarioGenerado()[0].dia).toBe('Lunes');
     });
+
+    it('ACAD-043 | Error en cargarHorarios no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarHorarios()).resolves.toBeUndefined();
+      expect(service.HorarioGenerado().length).toBe(0);
+    });
   });
 
   describe('cargarCarreras', () => {
@@ -142,17 +172,24 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(service.Carreras().length).toBe(1);
       expect(service.Carreras()[0].nombre).toBe('Ingeniería de Sistemas');
     });
+
+    it('ACAD-044 | Error en cargarCarreras no lanza excepción', async () => {
+      service = new AcademicService(errorHttp(new Error('Network')));
+      await expect(service.cargarCarreras()).resolves.toBeUndefined();
+      expect(service.Carreras().length).toBe(0);
+    });
   });
 
   describe('cargarTodo', () => {
-    it('ACAD-009 | cargarTodo constructor llama a 7 endpoints', async () => {
+    it('ACAD-009 | cargarTodo llama a 7 endpoints', async () => {
       const http = {
         get: vi.fn().mockReturnValue(of(mockEstudiante)),
         post: vi.fn().mockReturnValue(of({})),
         delete: vi.fn().mockReturnValue(of({})),
       };
       service = new AcademicService(http as any);
-      // Constructor llama cargarTodo: 7 endpoints (carreras, estudiantes, docentes, cursos, aulas, matriculas, horarios)
+      service.cargarTodo();
+      // cargarTodo llama 7 endpoints (carreras, estudiantes, docentes, cursos, aulas, matriculas, horarios)
       expect(http.get).toHaveBeenCalledTimes(7);
     });
   });
@@ -167,15 +204,40 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
 
     it('ACAD-011 | getEstadisticas fallback cuando API falla', async () => {
       service = new AcademicService(mockHttp(mockDashboardFallback));
-      // Poblar datos locales para el fallback
-      const http2 = mockHttp(mockEstudiante);
-      service = new AcademicService(http2);
       await service.cargarEstudiantes();
-
-      const svc2 = new AcademicService(mockHttp(mockDashboardFallback));
-      await svc2.cargarEstudiantes();
-      const stats = await svc2.getEstadisticas();
+      await service.cargarDocentes();
+      await service.cargarCursos();
+      await service.cargarMatriculas();
+      const stats = await service.getEstadisticas();
       expect(stats).toHaveProperty('total_estudiantes');
+      expect(stats).toHaveProperty('total_docentes');
+      expect(stats).toHaveProperty('total_cursos');
+      expect(stats).toHaveProperty('matriculas_aprobadas');
+      expect(stats).toHaveProperty('matriculas_rechazadas');
+    });
+
+    it('ACAD-034 | getEstadisticas fallback cuenta matriculas aprobadas y rechazadas', async () => {
+      const http = {
+        get: vi.fn()
+          .mockReturnValueOnce(of(mockEstudiante))
+          .mockReturnValueOnce(of(mockDocente))
+          .mockReturnValueOnce(of(mockCurso))
+          .mockReturnValueOnce(of(mockAula))
+          .mockReturnValueOnce(of(mockMatricula))
+          .mockReturnValueOnce(of(mockHorario))
+          .mockReturnValueOnce(of(mockCarrera))
+          .mockReturnValueOnce(of(mockDashboardFallback)),
+        post: vi.fn().mockReturnValue(of({})),
+        delete: vi.fn().mockReturnValue(of({})),
+      } as any;
+      service = new AcademicService(http);
+      await service.cargarTodo();
+      const stats = await service.getEstadisticas();
+      expect(stats.total_estudiantes).toBeGreaterThanOrEqual(0);
+      expect(stats.total_docentes).toBeGreaterThanOrEqual(0);
+      expect(stats.total_cursos).toBeGreaterThanOrEqual(0);
+      expect(stats.matriculas_aprobadas).toBeGreaterThanOrEqual(0);
+      expect(stats.matriculas_rechazadas).toBeGreaterThanOrEqual(0);
     });
   });
 
@@ -185,6 +247,22 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       await service.cargarEstudiantes();
       expect(service.getEstudianteByCodigo('E001')).toBeDefined();
       expect(service.getEstudianteByCodigo('INEXISTENTE')).toBeUndefined();
+    });
+
+    it('ACAD-032 | getDocenteByCodigo con datos cargados', async () => {
+      service = new AcademicService(mockHttp(mockDocente));
+      await service.cargarDocentes();
+      expect(service.getDocenteByCodigo('D001')).toBeDefined();
+      expect(service.getDocenteByCodigo('D001')?.nombre).toBe('María López');
+      expect(service.getDocenteByCodigo('INEXISTENTE')).toBeUndefined();
+    });
+
+    it('ACAD-033 | getCursoByCodigo con datos cargados', async () => {
+      service = new AcademicService(mockHttp(mockCurso));
+      await service.cargarCursos();
+      expect(service.getCursoByCodigo('C001')).toBeDefined();
+      expect(service.getCursoByCodigo('C001')?.nombre).toBe('Álgebra');
+      expect(service.getCursoByCodigo('INEXISTENTE')).toBeUndefined();
     });
   });
 
@@ -210,11 +288,39 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       expect(result).toBe(true);
     });
 
+    it('ACAD-015b | agregarDocente error de red retorna false', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      const result = await service.agregarDocente({ codigo: 'D002', nombre: 'Carlos Ruiz', especialidad: 'Física', correo: 'carlos@test.com' } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-015c | agregarDocente API falla retorna false', async () => {
+      const http = mockHttp({ success: false });
+      service = new AcademicService(http);
+      const result = await service.agregarDocente({ codigo: 'D002', nombre: 'Carlos Ruiz', especialidad: 'Física', correo: 'carlos@test.com' } as any);
+      expect(result).toBe(false);
+    });
+
     it('ACAD-016 | agregarCurso retorna true en éxito', async () => {
       const http = mockHttp({ success: true });
       service = new AcademicService(http);
       const result = await service.agregarCurso({ codigo: 'C002', nombre: 'Cálculo', creditos: 5, prereq: '', docente: '1', carrera: '1', cupos: 30 } as any);
       expect(result).toBe(true);
+    });
+
+    it('ACAD-016b | agregarCurso error de red retorna false', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      const result = await service.agregarCurso({ codigo: 'C002', nombre: 'Cálculo', creditos: 5, prereq: '', docente: '1', carrera: '1', cupos: 30 } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-016c | agregarCurso API falla retorna false', async () => {
+      const http = mockHttp({ success: false });
+      service = new AcademicService(http);
+      const result = await service.agregarCurso({ codigo: 'C002', nombre: 'Cálculo', creditos: 5, prereq: '', docente: '1', carrera: '1', cupos: 30 } as any);
+      expect(result).toBe(false);
     });
 
     it('ACAD-017 | agregarAula retorna true en éxito', async () => {
@@ -291,6 +397,55 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       await expect(service.eliminarCarrera(1)).resolves.toBeUndefined();
     });
 
+    it('ACAD-045 | eliminarCurso error de red no lanza', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      await expect(service.eliminarCurso(1)).resolves.toBeUndefined();
+    });
+
+    it('ACAD-046 | agregarAula error de red retorna false', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      const result = await service.agregarAula({ nombre: 'B-201', capacidad: 40, edificio: 'B', equipamiento: 'TV' } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-047 | agregarAula API falla retorna false', async () => {
+      const http = mockHttp({ success: false });
+      service = new AcademicService(http);
+      const result = await service.agregarAula({ nombre: 'B-201', capacidad: 40, edificio: 'B', equipamiento: 'TV' } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-048 | eliminarAula error de red no lanza', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      await expect(service.eliminarAula(1)).resolves.toBeUndefined();
+    });
+
+    it('ACAD-051 | eliminarAula exitoso recarga datos', async () => {
+      const http = {
+        get: vi.fn().mockReturnValue(of(mockAula)),
+        post: vi.fn(),
+        delete: vi.fn().mockReturnValue(of({}))
+      } as any;
+      service = new AcademicService(http);
+      await service.eliminarAula(1);
+      expect(http.delete).toHaveBeenCalledOnce();
+    });
+
+    it('ACAD-049 | eliminarEstudiante error de red no lanza', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      await expect(service.eliminarEstudiante(1)).resolves.toBeUndefined();
+    });
+
+    it('ACAD-050 | eliminarDocente error de red no lanza', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      await expect(service.eliminarDocente(1)).resolves.toBeUndefined();
+    });
+
     it('ACAD-028 | Error de red en agregarEstudiante retorna false', async () => {
       const http = errorHttp(new Error('Network error'));
       service = new AcademicService(http);
@@ -318,6 +473,34 @@ describe('AcademicService - Pruebas Unitarias con HttpClient mockeado', () => {
       service = new AcademicService(http);
       const result = await service.agregarHorario(1, 1, 1, '08:00', '10:00');
       expect(result.ok).toBe(false);
+    });
+
+    it('ACAD-035 | agregarCarrera retorna false cuando API falla', async () => {
+      const http = mockHttp({ success: false });
+      service = new AcademicService(http);
+      const result = await service.agregarCarrera({ nombre: 'Medicina', facultad: 'Ciencias' } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-036 | agregarCarrera error de red retorna false', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      const result = await service.agregarCarrera({ nombre: 'X', facultad: 'Y' } as any);
+      expect(result).toBe(false);
+    });
+
+    it('ACAD-037 | eliminarCarrera error de red no lanza', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      await expect(service.eliminarCarrera(1)).resolves.toBeUndefined();
+    });
+
+    it('ACAD-038 | getEstadisticas error de red retorna fallback', async () => {
+      const http = errorHttp(new Error('Network'));
+      service = new AcademicService(http);
+      const stats = await service.getEstadisticas();
+      expect(stats).toHaveProperty('total_estudiantes');
+      expect(stats.total_estudiantes).toBe(0);
     });
   });
 });

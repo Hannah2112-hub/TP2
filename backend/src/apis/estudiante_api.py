@@ -11,7 +11,7 @@ def get_estudiantes(solo_activos: bool = True):
     return {"success": True, "data": data}
 
 
-@router.post("", response_model=GenericResponse)
+@router.post("", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def create_estudiante(estudiante: EstudianteCreate):
     result = EstudianteService.create(
         estudiante.codigo,
@@ -25,7 +25,7 @@ def create_estudiante(estudiante: EstudianteCreate):
     return result
 
 
-@router.put("/{estudiante_id}", response_model=GenericResponse)
+@router.put("/{estudiante_id}", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def update_estudiante(estudiante_id: int, estudiante: EstudianteUpdate):
     result = EstudianteService.update(
         estudiante_id,

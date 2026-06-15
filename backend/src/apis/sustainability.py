@@ -1,5 +1,6 @@
 import os
 import json
+import aiofiles
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse, JSONResponse
 from src.repositories.metrics_repository import MetricsRepository
@@ -82,7 +83,12 @@ def get_environmental_impact():
     """
     
     for row in recent_metrics:
-        status_class = "status-200" if row["status_code"] < 400 else "status-400" if row["status_code"] < 500 else "status-500"
+        if row["status_code"] < 400:
+            status_class = "status-200"
+        elif row["status_code"] < 500:
+            status_class = "status-400"
+        else:
+            status_class = "status-500"
         html_content += f"""
                     <tr>
                         <td>{row["timestamp"]}</td>
@@ -108,21 +114,20 @@ def get_environmental_impact():
 
 @router.get("/api/sustainability", tags=["Sostenibilidad"])
 async def get_greenframe_report():
-    # Attempt to read the greenframe latest report file
     report_path = os.path.join(os.getcwd(), "backend", "public", "assets", "greenframe-latest.json")
-    # For flexibility in case we are running inside backend dir
     if not os.path.exists(report_path):
         report_path = os.path.join(os.getcwd(), "public", "assets", "greenframe-latest.json")
         
     if os.path.exists(report_path):
         try:
-            with open(report_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            async with aiofiles.open(report_path, "r", encoding="utf-8") as f:
+                content = await f.read()
+            data = json.loads(content)
             return JSONResponse(content=data)
         except Exception as e:
             return JSONResponse(status_code=500, content={"error": f"Error parsing report: {str(e)}"})
     else:
         return JSONResponse(
-            status_code=404, 
+            status_code=404,
             content={"message": "El análisis de GreenFrame aún no se ha ejecutado. Ejecute 'greenframe analyze' primero."}
         )

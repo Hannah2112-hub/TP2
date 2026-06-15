@@ -11,7 +11,7 @@ def get_docentes(solo_activos: bool = True):
     return {"success": True, "data": data}
 
 
-@router.post("", response_model=GenericResponse)
+@router.post("", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def create_docente(docente: DocenteCreate):
     result = DocenteService.create(
         docente.codigo,
@@ -25,7 +25,7 @@ def create_docente(docente: DocenteCreate):
     return result
 
 
-@router.put("/{docente_id}", response_model=GenericResponse)
+@router.put("/{docente_id}", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def update_docente(docente_id: int, docente: DocenteUpdate):
     result = DocenteService.update(
         docente_id,

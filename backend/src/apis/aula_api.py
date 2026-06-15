@@ -11,7 +11,7 @@ def get_aulas():
     return {"success": True, "data": data}
 
 
-@router.post("", response_model=GenericResponse)
+@router.post("", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def create_aula(aula: AulaCreate):
     result = AulaService.create(
         aula.nombre, aula.capacidad, aula.edificio, aula.equipamiento
@@ -21,7 +21,7 @@ def create_aula(aula: AulaCreate):
     return result
 
 
-@router.put("/{aula_id}", response_model=GenericResponse)
+@router.put("/{aula_id}", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def update_aula(aula_id: int, aula: AulaUpdate):
     result = AulaService.update(
         aula_id,

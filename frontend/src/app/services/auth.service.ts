@@ -6,13 +6,13 @@ import { TipoUsuario } from '../models/modelos';
   providedIn: 'root',
 })
 export class AuthService {
-  private loggedIn = signal(false);
-  private userType = signal<TipoUsuario | null>(null);
-  private userName = signal('');
-  private userId = signal<number | null>(null);
+  private readonly loggedIn = signal(false);
+  private readonly userType = signal<TipoUsuario | null>(null);
+  private readonly userName = signal('');
+  private readonly userId = signal<number | null>(null);
 
-  constructor(private router: Router) {
-    if (typeof window !== 'undefined' && window.localStorage) {
+  constructor(private readonly router: Router) {
+    if (globalThis.window?.localStorage) {
       const saved = localStorage.getItem('auth');
       if (saved) {
         const data = JSON.parse(saved);
@@ -48,7 +48,7 @@ export class AuthService {
     this.userType.set(tipo);
     this.userName.set(nombreGenerico);
     
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (globalThis.window?.localStorage) {
       localStorage.setItem(
         'auth',
         JSON.stringify({
@@ -66,7 +66,7 @@ export class AuthService {
     this.userType.set(null);
     this.userName.set('');
     this.userId.set(null);
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (globalThis.window?.localStorage) {
       localStorage.removeItem('auth');
     }
     this.router.navigate(['/login']);

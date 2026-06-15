@@ -20,8 +20,8 @@ export class LoginComponent {
   showError = signal(false);
 
   constructor(
-    private auth: AuthService,
-    private router: Router,
+    private readonly auth: AuthService,
+    private readonly router: Router,
   ) {}
 
   selectType(tipo: TipoUsuario) {

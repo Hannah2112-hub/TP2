@@ -46,10 +46,11 @@
 
       <form (ngSubmit)="login()" data-cy="login-form">
         <div class="form-group">
-          <label>Correo electrónico</label>
+          <label for="login-email">Correo electrónico</label>
           <div class="input-wrapper">
             <input
               type="email"
+              id="login-email"
               [(ngModel)]="email"
               name="email"
               placeholder="correo@uni.edu"
@@ -61,10 +62,11 @@
         </div>
 
         <div class="form-group">
-          <label>Contraseña</label>
+          <label for="login-password">Contraseña</label>
           <div class="input-wrapper">
             <input
               type="password"
+              id="login-password"
               [(ngModel)]="password"
               name="password"
               placeholder="••••••••"

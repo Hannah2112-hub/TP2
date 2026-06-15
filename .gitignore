@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+angular/
+frontend/dist/
+frontend/coverage/
+frontend/test-results/
+frontend/.angular/
+frontend/.vscode/
+
+# SonarQube
+.scannerwork/
+
+# Logs
+backend/latest_logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+htmlcov/
+*.lcov
+backend/coverage.xml

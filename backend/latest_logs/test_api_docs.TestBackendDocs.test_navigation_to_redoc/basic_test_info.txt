@@ -1,61 +1,61 @@
 tests/e2e/test_api_docs.py::TestBackendDocs::test_navigation_to_redoc
 --------------------------------------------------------------------
 Last Page: http://127.0.0.1:8000/redoc
- Duration: 4.30s
-  Browser: Chrome 147.0.7727.138
-   Driver: chromedriver 147.0.7727.117
-Timestamp: 1777835837  (Unix Timestamp)
-     Date: Sunday, May 3, 2026
-     Time: 2:17:17 PM  (Hora est. Pacífico, Sudamérica, UTC-05:00)
+ Duration: 2.26s
+  Browser: Chrome 149.0.7827.104
+   Driver: chromedriver 149.0.7827.115
+Timestamp: 1781452463  (Unix Timestamp)
+     Date: Sunday, June 14, 2026
+     Time: 10:54:23 AM  (Hora est. Pacífico, Sudamérica, UTC-05:00)
 --------------------------------------------------------------------
 Traceback:
-  File "C:\Matricula - Universidad Continetal\backend\tests\e2e\test_api_docs.py", line 23, in test_navigation_to_redoc
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\tests\e2e\test_api_docs.py", line 14, in test_navigation_to_redoc
     self.open("http://127.0.0.1:8000/redoc")
     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\fixtures\base_case.py", line 281, in open
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\fixtures\base_case.py", line 281, in open
     self.driver.get(url)
     ~~~~~~~~~~~~~~~^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\core\browser_launcher.py", line 6085, in <lambda>
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\core\browser_launcher.py", line 6087, in <lambda>
     driver.get = lambda url: updated_get(driver, url)
                              ~~~~~~~~~~~^^^^^^^^^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\core\browser_launcher.py", line 478, in updated_get
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\seleniumbase\core\browser_launcher.py", line 478, in updated_get
     driver.default_get(url)
     ~~~~~~~~~~~~~~~~~~^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 470, in get
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 470, in get
     self.execute(Command.GET, {"url": url})
     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 450, in execute
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 450, in execute
     self.error_handler.check_response(response)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
-  File "C:\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
+  File "C:\Users\USUARIO\Documents\Matricula - Universidad Continetal\backend\.venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 232, in check_response
     raise exception_class(message, screen, stacktrace)
 Exception: Message: unknown error: net::ERR_CONNECTION_REFUSED
-  (Session info: chrome=147.0.7727.138)
+  (Session info: chrome=149.0.7827.104)
 Stacktrace:
-	chromedriver!GetHandleVerifier [0x7ff67b27a8e5+14e45]
-	chromedriver!GetHandleVerifier [0x7ff67b27a950+14eb0]
-	chromedriver!(No symbol) [0x7ff67afed6ed]
-	chromedriver!(No symbol) [0x7ff67afea224]
-	chromedriver!(No symbol) [0x7ff67afda191]
-	chromedriver!(No symbol) [0x7ff67afdc07f]
-	chromedriver!(No symbol) [0x7ff67afda733]
-	chromedriver!(No symbol) [0x7ff67afd9efb]
-	chromedriver!(No symbol) [0x7ff67afd9bb1]
-	chromedriver!(No symbol) [0x7ff67afd77e1]
-	chromedriver!(No symbol) [0x7ff67afd7f42]
-	chromedriver!(No symbol) [0x7ff67aff19a6]
-	chromedriver!(No symbol) [0x7ff67b095664]
-	chromedriver!(No symbol) [0x7ff67b07002a]
-	chromedriver!(No symbol) [0x7ff67b09483b]
-	chromedriver!(No symbol) [0x7ff67b0390e8]
-	chromedriver!(No symbol) [0x7ff67b039fc3]
-	chromedriver!GetHandleVerifier [0x7ff67b590149+32a6a9]
-	chromedriver!GetHandleVerifier [0x7ff67b58a715+324c75]
-	chromedriver!GetHandleVerifier [0x7ff67b5ac012+346572]
-	chromedriver!GetHandleVerifier [0x7ff67b297cb5+32215]
-	chromedriver!GetHandleVerifier [0x7ff67b2a087c+3addc]
-	chromedriver!GetHandleVerifier [0x7ff67b2840e4+1e644]
-	chromedriver!GetHandleVerifier [0x7ff67b284296+1e7f6]
-	chromedriver!GetHandleVerifier [0x7ff67b268737+2c97]
-	KERNEL32!BaseThreadInitThunk [0x7ffb452e7c24+14]
-	ntdll!RtlUserThreadStart [0x7ffb4660d721+21]
+	chromedriver!GetHandleVerifier [0x7ff74d35fd95+15395]
+	chromedriver!GetHandleVerifier [0x7ff74d35fdf0+153f0]
+	chromedriver!(No symbol) [0x7ff74ce978fd]
+	chromedriver!(No symbol) [0x7ff74ce9448e]
+	chromedriver!(No symbol) [0x7ff74ce84701]
+	chromedriver!(No symbol) [0x7ff74ce8656f]
+	chromedriver!(No symbol) [0x7ff74ce84ca3]
+	chromedriver!(No symbol) [0x7ff74ce8446b]
+	chromedriver!(No symbol) [0x7ff74ce84121]
+	chromedriver!(No symbol) [0x7ff74ce81e0b]
+	chromedriver!(No symbol) [0x7ff74ce82552]
+	chromedriver!(No symbol) [0x7ff74ce9bba6]
+	chromedriver!(No symbol) [0x7ff74cf3f8e4]
+	chromedriver!(No symbol) [0x7ff74cf19d7a]
+	chromedriver!(No symbol) [0x7ff74cf3eaeb]
+	chromedriver!(No symbol) [0x7ff74cee3a58]
+	chromedriver!(No symbol) [0x7ff74cee4953]
+	chromedriver!GetHandleVerifier [0x7ff74d925511+5dab11]
+	chromedriver!GetHandleVerifier [0x7ff74d91f8fb+5d4efb]
+	chromedriver!GetHandleVerifier [0x7ff74d943205+5f8805]
+	chromedriver!GetHandleVerifier [0x7ff74d37cc6e+3226e]
+	chromedriver!GetHandleVerifier [0x7ff74d38562c+3ac2c]
+	chromedriver!GetHandleVerifier [0x7ff74d369984+1ef84]
+	chromedriver!GetHandleVerifier [0x7ff74d369b14+1f114]
+	chromedriver!GetHandleVerifier [0x7ff74d34ca77+2077]
+	KERNEL32!BaseThreadInitThunk [0x7ffc616d7c24+14]
+	ntdll!RtlUserThreadStart [0x7ffc61c8d721+21]

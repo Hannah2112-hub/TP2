@@ -3,14 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AcademicService } from '../../services/academic.service';
-import {
-  Estudiante,
-  Docente,
-  Curso,
-  Aula,
-  Matricula,
-  AsignacionHorario,
-} from '../../models/modelos';
+import { AsignacionHorario } from '../../models/modelos';
 
 @Component({
   selector: 'app-dashboard',
@@ -97,12 +90,12 @@ export class DashboardComponent implements OnInit {
   colores = ['hc-purple', 'hc-teal', 'hc-blue', 'hc-amber', 'hc-coral', 'hc-green'];
 
   constructor(
-    public auth: AuthService,
-    public academicService: AcademicService,
+    public readonly auth: AuthService,
+    public readonly academicService: AcademicService,
   ) {}
 
-  async ngOnInit() {
-    await this.refreshStats();
+  ngOnInit() {
+    this.refreshStats();
   }
 
   navigate(page: string) {

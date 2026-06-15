@@ -61,7 +61,7 @@ class TestRepositoriesBulk(unittest.TestCase):
         # Test create - needs side_effect for each execute_query call inside create
         mock_execute.side_effect = [[{"prerequisito_cumplido": True}], [], [{"matriculaid": 1}]]
         res = MatriculaRepository.create(1, 1)
-        self.assertTrue(isinstance(res, dict))
+        self.assertIsInstance(res, dict)
 
     @patch('src.repositories.matricula_repository.execute_query')
     def test_matricula_update_estado(self, mock_execute):

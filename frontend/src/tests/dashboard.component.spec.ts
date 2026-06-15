@@ -199,4 +199,73 @@ describe('DashboardComponent - Pruebas de Clase', () => {
       expect(component.curCodigo()).toBe('');
     });
   });
+
+  describe('eliminarEstudiante with direct ID', () => {
+    it('CRUD-EST-005 | eliminarEstudiante con ID directo (no objeto)', async () => {
+      const spy = vi.spyOn(academic, 'eliminarEstudiante').mockResolvedValue(undefined);
+      await component.eliminarEstudiante(5);
+      expect(spy).toHaveBeenCalledWith(5);
+    });
+  });
+
+  describe('agregarMatricula error path', () => {
+    it('MAT-003 | validarMatricula cuando API retorna error', async () => {
+      vi.spyOn(academic, 'agregarMatricula').mockResolvedValue({ ok: false, mensaje: 'Error de matrícula' });
+      component.matEstudiante.set('1');
+      component.matCurso.set('2');
+      await component.validarMatricula();
+      expect(component.mensaje()).toBe('Error de matrícula');
+      expect(component.mensajeTipo()).toBe('error');
+    });
+  });
+
+  describe('generarHorarios error path', () => {
+    it('HOR-ERROR-001 | generarHorarios cuando API retorna error', async () => {
+      vi.spyOn(academic, 'Cursos', 'get').mockReturnValue(vi.fn(() => [{ id: 1 }] as any));
+      vi.spyOn(academic, 'generarHorarios').mockResolvedValue({ ok: false, mensaje: 'Error al generar' });
+      component.horInicio.set(8);
+      component.horBloque.set(2);
+      await component.generarHorarios();
+      expect(component.mensaje()).toBe('Error al generar');
+      expect(component.mensajeTipo()).toBe('error');
+    });
+  });
+
+  describe('registrarOfertaHoraria error path', () => {
+    it('HOR-ERROR-002 | registrarOfertaHoraria cuando API retorna error', async () => {
+      vi.spyOn(academic, 'agregarHorario').mockResolvedValue({ ok: false, mensaje: 'Error horario' });
+      component.oferCurso.set('1');
+      component.oferAula.set('2');
+      component.oferDia.set('1');
+      component.oferHoraI.set('08:00');
+      component.oferHoraF.set('10:00');
+      await component.registrarOfertaHoraria();
+      expect(component.mensaje()).toBe('Error horario');
+      expect(component.mensajeTipo()).toBe('error');
+    });
+  });
+
+  describe('Computed signals', () => {
+    it('COMP-001 | carreras computed retorna datos del service', () => {
+      expect(component.carreras()).toEqual([]);
+    });
+    it('COMP-002 | docentes computed retorna datos del service', () => {
+      expect(component.docentes()).toEqual([]);
+    });
+    it('COMP-003 | cursos computed retorna datos del service', () => {
+      expect(component.cursos()).toEqual([]);
+    });
+    it('COMP-004 | estudiantes computed retorna datos del service', () => {
+      expect(component.estudiantes()).toEqual([]);
+    });
+    it('COMP-005 | aulas computed retorna datos del service', () => {
+      expect(component.aulas()).toEqual([]);
+    });
+    it('COMP-006 | matriculas computed retorna datos del service', () => {
+      expect(component.matriculas()).toEqual([]);
+    });
+    it('COMP-007 | horario computed retorna datos del service', () => {
+      expect(component.horario()).toEqual([]);
+    });
+  });
 });

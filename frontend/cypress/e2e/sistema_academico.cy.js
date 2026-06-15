@@ -115,7 +115,10 @@ describe('Autenticacion API', () => {
       body: { email: 'admin@uni.edu', password: 'WRONG', tipo: 'admin' },
       failOnStatusCode: false
     }).then((resp) => {
-      expect(resp.status === 401 || resp.status === 404 || resp.status === 503).to.be.true;
+      expect(resp.status).to.be.oneOf([401, 404, 503]);
+      if (resp.status === 401) {
+        expect(resp.body.detail).to.exist;
+      }
     });
   });
 
@@ -125,7 +128,10 @@ describe('Autenticacion API', () => {
       body: { email: 'test@test.com', password: 'pass', tipo: 'hacker' },
       failOnStatusCode: false
     }).then((resp) => {
-      expect(resp.status === 400 || resp.status === 404 || resp.status === 503).to.be.true;
+      expect(resp.status).to.be.oneOf([400, 404, 503]);
+      if (resp.status === 400) {
+        expect(resp.body.detail).to.exist;
+      }
     });
   });
 });

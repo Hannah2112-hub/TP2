@@ -24,21 +24,19 @@ interface ApiResponse<T = any> {
 })
 export class AcademicService {
   // ── Signals reactivos (fuente de verdad para la UI) ──────────────────────
-  private carreras      = signal<Carrera[]>([]);
-  private estudiantes = signal<Estudiante[]>([]);
-  private docentes    = signal<Docente[]>([]);
-  private cursos      = signal<Curso[]>([]);
-  private aulas       = signal<Aula[]>([]);
-  private matriculas  = signal<Matricula[]>([]);
-  private horarioGenerado = signal<AsignacionHorario[]>([]);
-  private dashboardMetrics = signal<Record<string, number>>({});
+  private readonly carreras      = signal<Carrera[]>([]);
+  private readonly estudiantes = signal<Estudiante[]>([]);
+  private readonly docentes    = signal<Docente[]>([]);
+  private readonly cursos      = signal<Curso[]>([]);
+  private readonly aulas       = signal<Aula[]>([]);
+  private readonly matriculas  = signal<Matricula[]>([]);
+  private readonly horarioGenerado = signal<AsignacionHorario[]>([]);
+  private readonly dashboardMetrics = signal<Record<string, number>>({});
 
-  private colores = ['hc-purple', 'hc-teal', 'hc-blue', 'hc-amber', 'hc-coral', 'hc-green'];
-  private diasNombres = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+  private readonly colores = ['hc-purple', 'hc-teal', 'hc-blue', 'hc-amber', 'hc-coral', 'hc-green'];
+  private readonly diasNombres = ['', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
 
-  constructor(private http: HttpClient) {
-    this.cargarTodo();
-  }
+  constructor(private readonly http: HttpClient) {}
 
   // ── Getters readonly ──────────────────────────────────────────────────────
   get Carreras()        { return this.carreras.asReadonly(); }
@@ -289,8 +287,8 @@ export class AcademicService {
           codigo:     String(h.cursoid),
           docente:    '—',
           dia:        this.diasNombres[h.diasemana] ?? `Día ${h.diasemana}`,
-          horaInicio: parseInt(h.horainicio?.split(':')[0] ?? '8', 10),
-          horaFin:    parseInt(h.horafin?.split(':')[0] ?? '10', 10),
+          horaInicio: Number.parseInt(h.horainicio?.split(':')[0] ?? '8', 10),
+          horaFin:    Number.parseInt(h.horafin?.split(':')[0] ?? '10', 10),
           aula:       h.nombreaula ?? `Aula ${h.aulaid}`,
           color:      this.colores[i % this.colores.length],
           carreraId:  h.carreraid,

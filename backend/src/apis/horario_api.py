@@ -1,3 +1,4 @@
+from typing import Annotated
 from fastapi import APIRouter, HTTPException, Query
 from ..schemas import GenericResponse, HorarioCreate
 from ..services import HorarioService, DashboardService
@@ -11,7 +12,7 @@ def get_horarios():
     return {"success": True, "data": data}
 
 
-@router.post("/horarios", response_model=GenericResponse)
+@router.post("/horarios", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def crear_horario(horario: HorarioCreate):
     result = HorarioService.create(horario)
     if not result["success"]:
@@ -19,11 +20,11 @@ def crear_horario(horario: HorarioCreate):
     return result
 
 
-@router.post("/horarios/generar", response_model=GenericResponse)
+@router.post("/horarios/generar", response_model=GenericResponse, responses={400: {"description": "Error de generación"}})
 def generar_horarios(
-    hora_inicio: str = Query(default="08:00", description="Hora de inicio en formato HH:MM"),
-    bloques_horas: int = Query(default=2, ge=1, le=6, description="Duración del bloque en horas"),
-    carrera_id: int | None = Query(default=None, description="ID de la carrera a generar horario"),
+    hora_inicio: Annotated[str, Query(description="Hora de inicio en formato HH:MM")] = "08:00",
+    bloques_horas: Annotated[int, Query(ge=1, le=6, description="Duración del bloque en horas")] = 2,
+    carrera_id: Annotated[int | None, Query(description="ID de la carrera a generar horario")] = None,
 ):
     result = HorarioService.generar(hora_inicio, bloques_horas, carrera_id)
     if not result["success"]:

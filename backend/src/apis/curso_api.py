@@ -11,7 +11,7 @@ def get_cursos():
     return {"success": True, "data": data}
 
 
-@router.post("", response_model=GenericResponse)
+@router.post("", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def create_curso(curso: CursoCreate):
     result = CursoService.create(
         curso.codigo,
@@ -27,7 +27,7 @@ def create_curso(curso: CursoCreate):
     return result
 
 
-@router.put("/{curso_id}", response_model=GenericResponse)
+@router.put("/{curso_id}", response_model=GenericResponse, responses={400: {"description": "Error de validación"}})
 def update_curso(curso_id: int, curso: CursoUpdate):
     result = CursoService.update(
         curso_id,

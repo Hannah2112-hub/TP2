@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach, beforeEach } from 'vitest';
-import { HttpRequest, HttpResponse, http } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { handlers } from '../mocks/handlers';
 

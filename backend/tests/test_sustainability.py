@@ -52,10 +52,14 @@ class TestSustainability(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn("GreenFrame", response.json()["message"])
 
-    @patch("os.path.exists")
-    @patch("builtins.open", new_callable=unittest.mock.mock_open, read_data='{"score": 90}')
-    def test_get_greenframe_report_found(self, mock_open, mock_exists):
-        mock_exists.return_value = True
+    @patch("os.path.exists", return_value=True)
+    @patch("src.apis.sustainability.aiofiles")
+    def test_get_greenframe_report_found(self, mock_aiofiles, mock_exists):
+        import json
+        mock_file = unittest.mock.AsyncMock()
+        mock_file.read = unittest.mock.AsyncMock(return_value=json.dumps({"score": 90}))
+        mock_aiofiles.open.return_value.__aenter__ = unittest.mock.AsyncMock(return_value=mock_file)
+        mock_aiofiles.open.return_value.__aexit__ = unittest.mock.AsyncMock(return_value=False)
         response = self.client.get("/api/sustainability")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"score": 90})
