@@ -5,126 +5,154 @@
 **Proyecto:** Matrícula - Universidad Continental
 **Fecha:** Junio 2026
 **Herramienta:** SonarQube 26.6.0.123539 (Community Build)
+**Repositorio:** https://github.com/Hannah2112-hub/TP2
 
 ---
 
-## 1. Evidencia: Métricas Generales - Estado Antes
+## 1. Estado Inicial del Proyecto (Antes de Correcciones)
 
-![Métricas generales antes](evidencias/metricageneral_antes.jpg)
+![Dashboard inicial - Métricas antes de correcciones](evidencias/metricageneral_antes.jpg)
 
 **Descripción:**
-Captura del dashboard de SonarQube mostrando las métricas generales del proyecto antes de implementar las correcciones. Se observan los indicadores de calidad que necesitaban atención.
+Captura del dashboard principal de SonarQube mostrando el estado del proyecto **antes** de implementar las correcciones de calidad. Se observa que el proyecto tiene **4k líneas de código** (Python, TypeScript) con múltiples problemas detectados.
 
-**Estado inicial del proyecto:**
+**Métricas iniciales visibles en la captura:**
 
 | Métrica | Valor Inicial | Estado |
 |---|---|---|
-| Bugs | 0 | ✅ |
-| Vulnerabilities | 0 | ✅ |
-| Code Smells | 0 | ✅ |
-| Quality Gate | ERROR | ❌ |
-| Coverage | Bajo | ❌ |
-| Hotspots | TO_REVIEW | ❌ |
+| Security (Seguridad) | **mi** (minor - 1 problema bloqueador) | ⚠️ |
+| Reliability (Fiabilidad) | **D** (41 problemas graves) | ❌ |
+| Maintainability (Mantenibilidad) | **A** (90 code smells) | ⚠️ |
+| Hotspots Reviewed | **0.0%** (ninguno revisado) | ❌ |
+| Coverage (Cobertura) | **0.0%** (sin pruebas) | ❌ |
+| Duplications (Duplicaciones) | **0.5%** | ✅ |
+| Quality Gate | **Aprobado** (pero con issues) | ⚠️ |
+
+**Problemas principales identificados:**
+- 1 problema bloqueador de seguridad
+- 41 problemas de fiabilidad (bugs potenciales)
+- 90 code smells de mantenibilidad
+- Sin cobertura de pruebas automatizadas
+- Security hotspots no revisados
 
 ---
 
-## 2. Evidencia: Errores Detectados
+## 2. Errores Detectados en el Código
 
-![Errores detectados](evidencias/errores.jpg)
-
-**Descripción:**
-Captura de los errores y problemas de código detectados por SonarQube durante el análisis estático. Se identificaron un total de **99 issues** de código que incluían:
-
-- Violaciones de reglas de código (code smells)
-- Problemas de contraste de colores (WCAG)
-- Uso de `tabindex` sin handlers de teclado
-- Etiquetas HTML sin label asociado
-- Imports no utilizados en TypeScript
-- Parámetros `Query()` con formato incorrecto en FastAPI
-- Ternarios anidados difíciles de mantener
-- Complejidad ciclomática alta en `horario_repository.py`
-
-**Detalle de issues por tipo:**
-
-| Tipo | Cantidad | Reglas |
-|---|---|---|
-| Code Smells (Python) | 30+ | python:S5754, python:S1301, python:S3776, python:S5906 |
-| Code Smells (TypeScript) | 40+ | typescript:S3827, typescript:S4144 |
-| Code Smells (CSS) | 20+ | css:S6845 (contraste) |
-| Code Smells (HTML) | 9+ | web:S6845 (tabindex, labels) |
-
----
-
-## 3. Evidencia: Evidencia de Corrección (Quality Gate PASSED)
-
-![Quality Gate Passed](evidencias/evidenciapassed.jpg)
+![Issues abiertos - 129 problemas detectados](evidencias/errores.jpg)
 
 **Descripción:**
-Captura del estado del Quality Gate después de implementar todas las correcciones. Se observa el estado **OK** confirmando que el proyecto cumple con todos los criterios de calidad.
+Captura de la pestaña **"Asuntos" (Issues)** de SonarQube mostrando todos los problemas abiertos antes de las correcciones. Se evidencian **129 issues** con un esfuerzo estimado de **1 día y 2 horas** de trabajo para resolverlos.
 
-**Condiciones del Quality Gate:**
+**Detalle visible en la captura:**
 
-| Condición | Estado | Valor Actual | Umbral |
-|---|---|---|---|
-| new_coverage | **OK** | 95.9% | >80% |
-| new_duplicated_lines_density | **OK** | 0.0% | <3% |
-| new_violations | **OK** | 0 | 0 |
-
-**Resultado: PASS** ✅
-
----
-
-## 4. Evidencia: Security Hotspot Revisado
-
-![Security Hotspot](evidencias/hostpost.jpg)
-
-**Descripción:**
-Captura del Security Hotspot detectado por SonarQube relacionado con el uso de `random.randint()` en el archivo `horario_repository.py`.
-
-**Detalle del hotspot:**
-
-| Campo | Valor |
+| Métrica | Valor |
 |---|---|
-| Archivo | `backend/src/repositories/horario_repository.py` |
-| Línea | 211 |
-| Regla | weak-cryptography |
-| Mensaje | "Make sure that using this pseudorandom number generator is safe here" |
-| Probabilidad de vulnerabilidad | MEDIUM |
+| Total de issues abiertos | **129** |
+| Esfuerzo estimado | **1 día y 2 horas** |
+| Categoría principal | Mantenibilidad |
+| Severidad | Alto |
 
-**Análisis de riesgo:**
-El uso de `random.randint()` en este contexto es para **sembrar el solver CSP de OR-Tools** (constraint satisfaction problem) para la generación de horarios académicos. **No es un uso criptográfico**, por lo que no representa un riesgo real de seguridad.
+**Tipos de problemas detectados:**
+- **"Documente esta HTTPException con el código de estado 400 en el parámetro 'responses'"** - Problemas en los endpoints de la API
+- **"Documente esta HTTPException con el código de estado 401 en el parámetro 'responses'"** - Endpoints sin documentación correcta
+- Issues en archivos: `aula_api.py`, `auth_api.py`, entre otros
 
-**Acción tomada:**
-Se revisó el hotspot y se marcó como **SAFE** (seguro) con la justificación:
-> "random.randint is used to seed OR-Tools CSP solver for schedule generation, not for cryptographic purposes"
-
-**Estado actual:** 0 hotspots pendientes de revisión ✅
+**Archivos afectados:**
+- `backend/src/apis/aula_api.py` - Línea 20, 34
+- `backend/src/apis/auth_api.py` - Múltiples líneas
+- Otros archivos de APIs y servicios
 
 ---
 
-## 5. Evidencia: Cobertura de Código Actual
+## 3. Resultado Final (Quality Gate PASSED)
 
-![Cobertura actual](evidencias/coberturaactual.jpg)
+![Quality Gate Passed - Estado final del proyecto](evidencias/evidenciapassed.jpg)
 
 **Descripción:**
-Captura de la cobertura de código alcanzada después de escribir las pruebas automatizadas y configurar los reportes de cobertura.
+Captura de la página **Overview** del proyecto mostrando el estado **después** de implementar todas las correcciones. El **Quality Gate** muestra **"Passed"** (Aprobado) con un indicador verde, confirmando que el proyecto cumple con todos los criterios de calidad establecidos.
 
-**Cobertura por componente:**
+**Métricas finales visibles en la captura:**
 
-| Componente | Coverage | Líneas a cubrir | Líneas sin cubrir |
-|---|---|---|---|
-| Backend (Python) | **96.8%** | 988 | 32 |
-| Frontend (TypeScript) | **97.6%** | 387 | 0 |
-| **Global** | **97.1%** | 1,375 | 32 |
+| Métrica | Valor Final | Estado |
+|---|---|---|
+| Quality Gate | **Passed** | ✅ |
+| Líneas de código | **3.9k** | — |
+| Versión | **1.0** | — |
+| Último análisis | **Hace 4 horas** | — |
+| New Code desde | **June 13, 2026** | — |
+| New issues | **0** | ✅ |
+| Accepted issues | **0** | ✅ |
+| Coverage (nuevo código) | **95.9%** | ✅ |
 
-**Detalle Frontend (100% statements, 100% functions, 100% lines):**
+**Condiciones del Quality Gate cumplidas:**
+- ✅ new_coverage > 80% (obtenido: 95.9%)
+- ✅ new_duplicated_lines_density < 3% (obtenido: 0.0%)
+- ✅ new_violations = 0 (obtenido: 0)
 
-```
-All files          | 100% Stmts | 93.23% Branch | 100% Funcs | 100% Lines
- pages/dashboard   |     100%   |      100%     |    100%    |    100%
- pages/login       |     100%   |      100%     |    100%    |    100%
- services          |     100%   |     89.14%    |    100%    |    100%
-```
+---
+
+## 4. Security Hotspots Revisados
+
+![Security Hotspots - 100% revisados](evidencias/hostpost.jpg)
+
+**Descripción:**
+Captura de la pestaña **"Security Hotspots"** mostrando que el **100% de los hotspots de seguridad han sido revisados**. No hay ningún hotspot pendiente de revisión.
+
+**Métricas visibles en la captura:**
+
+| Métrica | Valor | Estado |
+|---|---|---|
+| Security Hotspots Reviewed | **100%** | ✅ |
+| Hotspots "To review" | **0** | ✅ |
+| Hotspots "Acknowledged" | **0** | ✅ |
+| Hotspots "Fixed" | **0** | ✅ |
+| Hotspots "Safe" | **1** (revisado y marcado como seguro) | ✅ |
+
+**Detalle del hotspot revisado:**
+- **Archivo:** `backend/src/repositories/horario_repository.py`
+- **Línea:** 211
+- **Regla:** weak-cryptography
+- **Problema detectado:** Uso de `random.randint()` (generador de números pseudoaleatorios)
+- **Análisis:** El uso de `random.randint()` es para **sembrar el solver CSP de OR-Tools** (generación de horarios), **no es uso criptográfico**
+- **Resolución:** Marcado como **SAFE** (seguro) con justificación técnica
+- **Estado actual:** "There are no Security Hotspots to review"
+
+---
+
+## 5. Cobertura de Código por Componente
+
+![Cobertura de código - Backend y Frontend](evidencias/coberturaactual.jpg)
+
+**Descripción:**
+Captura de la pestaña **"Code"** mostrando las métricas de calidad desglosadas por componente (backend y frontend). Se evidencia una cobertura de código excelente en ambos componentes.
+
+**Métricas visibles en la captura:**
+
+| Componente | Líneas de Código | Security | Reliability | Maintainability | Hotspots | Coverage | Duplications |
+|---|---|---|---|---|---|---|---|
+| **Matrícula - Universidad Continental** | **3,947** | 0 | 0 | 0 | 0 | **97.1%** | **0.5%** |
+| **backend** (Python) | **1,572** | 0 | 0 | 0 | 0 | **96.8%** | **0.0%** |
+| **frontend** (TypeScript) | **2,375** | 0 | 0 | 0 | 0 | **97.6%** | **0.8%** |
+
+**Análisis por componente:**
+
+### Backend (Python - FastAPI)
+- **1,572 líneas de código**
+- **Coverage: 96.8%** - Excelente, casi total
+- **Duplications: 0.0%** - Sin código duplicado
+- **0 bugs, 0 vulnerabilities, 0 code smells**
+
+### Frontend (TypeScript - Angular)
+- **2,375 líneas de código**
+- **Coverage: 97.6%** - Excelente, supera al backend
+- **Duplications: 0.8%** - Muy bajo, aceptable
+- **0 bugs, 0 vulnerabilities, 0 code smells**
+
+### Global
+- **3,947 líneas de código totales**
+- **Coverage global: 97.1%** - Muy por encima del umbral del 80%
+- **Duplications: 0.5%** - Muy por debajo del umbral del 3%
 
 ---
 
@@ -132,40 +160,43 @@ All files          | 100% Stmts | 93.23% Branch | 100% Funcs | 100% Lines
 
 | Métrica | Antes | Después | Mejora |
 |---|---|---|---|
-| Quality Gate | ❌ ERROR | ✅ OK | Corregido |
-| Issues abiertos | 99 | **0** | -100% |
-| Coverage Global | ~85% | **97.1%** | +12% |
-| Coverage Frontend | 87.6% | **97.6%** | +10% |
-| Coverage Backend | 96.8% | **96.8%** | Mantenido |
-| Security Hotspots | 1 TO_REVIEW | **0** | 100% reviewed |
+| Quality Gate | ⚠️ Aprobado (con issues) | ✅ **Passed** (sin issues) | Corregido |
+| Security Rating | **mi** (minor) | **A** (0 problemas) | ⬆️ |
+| Reliability Rating | **D** (41 problemas) | **A** (0 problemas) | ⬆️ |
+| Maintainability Rating | **A** (90 code smells) | **A** (0 code smells) | ⬆️ |
+| Issues abiertos | **129** | **0** | -100% |
+| Security Hotspots Reviewed | **0.0%** | **100%** | +100% |
+| Coverage (Global) | **0.0%** | **97.1%** | +97.1% |
+| Coverage (Backend) | **0.0%** | **96.8%** | +96.8% |
+| Coverage (Frontend) | **0.0%** | **97.6%** | +97.6% |
+| Duplications | **0.5%** | **0.5%** | Mantenido |
 | Bugs | 0 | **0** | Mantenido |
 | Vulnerabilities | 0 | **0** | Mantenido |
-| Code Smells | 0 | **0** | Mantenido |
-| Duplications | 0.5% | **0.5%** | Mantenido |
-| Deuda Técnica | 30 min | **0 horas** | -100% |
+| Deuda Técnica | **1 día 2 horas** | **0 horas** | -100% |
 
 ---
 
-## 7. Correcciones Implementadas (Resumen)
+## 7. Correcciones Implementadas
 
 ### Backend (Python)
-1. 8 archivos de APIs corregidos (HTTPException + Annotated types)
-2. `sustainability.py` - Ternarios anidados refactorizados
-3. `app.py` - Host binding corregido (127.0.0.1)
-4. `horario_repository.py` - Complejidad reducida a ≤15
-5. Tests corregidos (assertIsInstance)
+1. **8 archivos de APIs corregidos** - HTTPException responses + Annotated types
+2. **sustainability.py** - Ternarios anidados refactorizados a if/elif/else
+3. **app.py** - Host binding corregido (0.0.0.0 → 127.0.0.1)
+4. **horario_repository.py** - Complejidad ciclomática reducida a ≤15
+5. **Tests** - assertTrue(isinstance()) → assertIsInstance()
 
 ### Frontend (TypeScript/Angular)
-1. CSS corregido - Colores sólidos opacos para WCAG
-2. HTML corregido - 26 labels con for/id, keyboard handlers
-3. TypeScript corregido - Imports usados, readonly params
-4. Coverage configurado - Vitest con cobertura lcov/cobertura
-5. Archivos excluidos - Bootstrap, guards, modelos no testeables
+1. **CSS corregido** - Colores sólidos opacos para contraste WCAG
+2. **HTML corregido** - 26 labels con for/id, keyboard handlers
+3. **TypeScript corregido** - Imports no usados eliminados, readonly params
+4. **Coverage configurado** - Vitest con cobertura lcov/cobertura XML
+5. **Archivos excluidos** - Bootstrap, guards, modelos no testeables
 
 ### SonarQube
-1. Scanner configurado con token
-2. Coverage reports integrados (lcov + cobertura XML)
-3. Exclusiones configuradas para archivos no testeables
+1. **Scanner configurado** con token de análisis
+2. **Coverage reports integrados** - lcov (frontend) + cobertura XML (backend)
+3. **Exclusiones configuradas** para archivos no testeables
+4. **Security Hotspot** revisado y marcado como SAFE
 
 ---
 
@@ -173,12 +204,14 @@ All files          | 100% Stmts | 93.23% Branch | 100% Funcs | 100% Lines
 
 El proyecto **Matrícula - Universidad Continental** ha alcanzado los siguientes logros en calidad de software:
 
-1. **Seguridad:** 0 bugs, 0 vulnerabilities, OWASP Top 10 2025 mitigado (9/10)
-2. **Mantenibilidad:** 0 code smells, deuda técnica eliminada, rating A
-3. **Accesibilidad:** WCAG contraste, keyboard navigation, labels HTML
-4. **Usabilidad:** SUS 87.5/100 (Excelente)
-5. **Verificabilidad:** 430 pruebas automatizadas, 97.1% coverage
-6. **Calidad:** Quality Gate OK, todos los indicadores en verde
+1. **Seguridad:** 0 bugs, 0 vulnerabilities, OWASP Top 10 2025 mitigado (9/10 categorías)
+2. **Fiabilidad:** Rating A (mejorado de D), 0 problemas de fiabilidad
+3. **Mantenibilidad:** 0 code smells, deuda técnica eliminada (1 día 2 horas → 0)
+4. **Accesibilidad:** WCAG contraste, keyboard navigation, labels HTML
+5. **Usabilidad:** SUS 87.5/100 (Excelente)
+6. **Verificabilidad:** 430 pruebas automatizadas, 97.1% coverage
+7. **Calidad:** Quality Gate Passed, todos los indicadores en verde
+8. **Seguridad revisada:** 100% Security Hotspots revisados
 
 ---
 
