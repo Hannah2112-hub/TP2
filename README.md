@@ -27,8 +27,7 @@
 - Meza Calderon Ana Cristina
 
 ---
-![Imagen del grupo](imagen_grupo.jpeg)
----
+![Imagen del grupo](docs/imagen_grupo.jpeg)---
 
 
 ## Problemática abordada
