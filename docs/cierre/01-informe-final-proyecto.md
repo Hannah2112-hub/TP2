@@ -9,7 +9,7 @@
 | **Fecha de inicio** | 24/03/2026 |
 | **Fecha de cierre** | 21/06/2026 |
 | **Repositorio** | https://github.com/Hannah2112-hub/TP2 |
-| **Versión entregada** | PMV v1.0 |
+| **Versión entregada** | PMV v1.0.0 |
 
 ---
 
