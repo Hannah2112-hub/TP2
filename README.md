@@ -168,7 +168,18 @@ python -m pytest tests/ -v -m "not e2e"
 | Cobertura | Vitest coverage (≥70%) | pytest-cov (≥70%) |
 
 ---
+## Documentación
+
+La documentación completa del proyecto, organizada según las áreas de gestión del PMBOK, se encuentra en la carpeta [`docs/`](./docs):
+
+- [Inicio](./docs/inicio)
+- [Planificación](./docs/planificacion)
+- [Ejecución](./docs/ejecucion)
+- [Seguimiento y Control](./docs/seguimiento_control)
+- [Cierre](./docs/cierre)
+- [Evidencias](./docs/evidencias)
+---
 
 ## Video explicativo
 
-👉 *(Agregar enlace al video – máximo 5 minutos)*
+👉(https://drive.google.com/file/d/1drvPty6sTfzO5dIxUdzw84HLqevffXWx/view?usp=sharing)
